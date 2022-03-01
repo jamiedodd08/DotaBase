@@ -1,0 +1,163 @@
+body {
+    background-color: rgb(31, 40, 51);
+    color: rgb(102, 252, 241);  
+    font-family: 'Heebo', sans-serif;
+}
+
+.homeimg {
+    width: 100%;
+    height: auto;
+    padding: 0px 0px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.section {
+    padding: 10px 10px;
+    background-color: rgb(11, 12, 16);
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.homeh1, .homeh2, .homeh3{
+    text-decoration: none;
+    font-family: 'Heebo', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    color: rgb(102, 252, 241);
+    text-align: center;
+    padding: 10px 10px;
+}
+
+.fcont{
+    float: right;
+    height: auto;
+}
+
+.fheroes{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: auto;
+    max-width: 400px;
+    border-style: solid;
+    border-color: aqua;
+}
+
+.pheroes{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: auto;
+    width: 20%;
+}
+
+footer {
+    font-size: 15px;
+    background-color: rgb(11, 12, 16);
+    text-align: center;
+    margin-top: 10px;
+}
+
+.gridheader {
+    border-style: solid;
+    border-color: aqua;
+}
+
+.imggrid {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(200px,200px));
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 10px;
+}
+
+.gridimg {
+    display: grid;
+    width: 100%;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.text {
+    position: absolute;
+    bottom:0;
+    font-size: larger;
+    color: white;
+}
+
+.attr {
+    position: absolute;
+    right:0;
+    bottom: 0;
+}
+
+.overlay {
+    position: absolute;
+    font-weight: bold;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: 0.5s ease;
+    pointer-events: none;
+}
+
+.container:hover .overlay {
+    opacity: 1;
+}
+
+.heroinfo {
+    border-style: solid;
+    border-color: aqua;
+}
+
+.himg {
+    width: 25%;  
+    border-radius: 5px;
+}
+
+.herotitle{
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    color: rgb(102, 252, 241);  
+}
+
+.heroabilities {
+    margin-top: 10px;
+    border-style: solid;
+    border-color: aqua;
+}
+
+.herocounters {
+    margin-top: 10px;
+    border-style: solid;
+    border-color: aqua;
+}
+
+.heroitems {
+    margin-top: 10px;
+    border-style: solid;
+    border-color: aqua;
+}
+
+.heroclips {
+    margin-top: 10px;
+    border-style: solid;
+    border-color: aqua;
+}

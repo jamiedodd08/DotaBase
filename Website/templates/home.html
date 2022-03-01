@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <section class="section">
+            <img src="static/images/visage.jpg" alt="homeimg" class="homeimg">
+            <div class="fcont">
+                <aside>
+                    <h1 class="homeh1">Featured Contributors</h1>
+                    <img src="static/images/heroes/abaddon.png" alt="homeimg" class="homeimg">
+                </aside>
+            </div>
+            <div class="fheroes">
+                <article>
+                    <h2 class="homeh2">Featured Heroes</h2>
+                    <img src="static/images/heroes/abaddon.png" alt="homeimg" class="homeimg">
+                </article>
+            </div>
+            <div class="pheroes">
+                <article>
+                    <h3 class="homeh3">Most Popular Heroes</h3>
+                    <img src="static/images/heroes/abaddon.png" alt="homeimg" class="homeimg">
+                </article>
+            </div>
+    </section>
+    <footer>
+    <p>Footer</p>
+    </footer>
+</body>
+</html>

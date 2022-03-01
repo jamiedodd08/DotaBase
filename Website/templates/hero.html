@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <section class="section">
+        <div class="heroinfo">
+            <img src= {{heroimg}} alt="himg" class="himg">
+            <h1 class="herotitle">{{heroname}}</h1>
+        </div>
+        <div class="heroabilities">
+            <h2 class="abilitiestitle">Abilities</h2>
+        </div>
+        <div class="herocounters">
+            <h2 class="counterstitle">Counters</h2>
+        </div>
+        <div class="heroitems">
+            <h2 class="itemstitle">Items</h2>
+        </div>
+        <div class="heroclips">
+            <h2 class="clipstitle">Clips</h2>
+        </div>
+    </section>
+    <footer>
+    <p>Footer</p>
+    </footer>
+</body>
+</html>
