@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="static/images/logo4.png">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
-    <title>Document</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/addcounter.js') }}"></script>
+    <title>{{heroname}}</title>
 </head>
 <body>
     {% include 'navbar.html' %}
@@ -14,17 +16,35 @@
             <img src= {{heroimg}} alt="himg" class="himg">
             <h1 class="herotitle">{{heroname}}</h1>
         </div>
+        <h2 class="abilitiestitle">Abilities</h2>
         <div class="heroabilities">
-            <h2 class="abilitiestitle">Abilities</h2>
+            
         </div>
-        <div class="herocounters">
-            <h2 class="counterstitle">Counters</h2>
+        <h2 class="counterstitle">Counters</h2>
+        <div class="herocounterto">
+            <h3 class="counterto">Counter To:</h3>
+            {% if session['username'] %}
+                <button onclick="toggle()" class="addcounterbutton">+</button>
+            {% endif %}
+            <p>{{counterinfo}}</p>
+            <div id="counterdropdown">
+                <SELECT>
+                    {% for i in heronames %}
+                        <option value={{i[0]}}>{{i[1]}}</option>
+                    {% endfor %}
+                </SELECT>
+            </div>
         </div>
+        <div class="herocounteredby">
+            
+        </div>
+        <h2 class="itemstitle">Items</h2>
         <div class="heroitems">
-            <h2 class="itemstitle">Items</h2>
+            
         </div>
+        <h2 class="clipstitle">Clips</h2>
         <div class="heroclips">
-            <h2 class="clipstitle">Clips</h2>
+            
         </div>
     </section>
     <footer>

@@ -2,6 +2,14 @@ DROP DATABASE IF EXISTS DotaBaseDB;
 
 CREATE DATABASE DotaBaseDB;
 
+CREATE TABLE DotaBaseDB.Users (
+    UserID int(11) NOT NULL AUTO_INCREMENT,
+    Username varchar(45),
+    UserPassword varchar(90),
+    EmailAddress varchar(40),
+    PRIMARY KEY (UserID)
+)AUTO_INCREMENT=1;
+
 CREATE TABLE DotaBaseDB.Heroes (
     HeroID int(11) NOT NULL AUTO_INCREMENT,
     HeroName varchar(40),
@@ -25,21 +33,25 @@ CREATE TABLE DotaBaseDB.Abilities (
 CREATE TABLE DotaBaseDB.AbilityInfo (
     AbilityInfoID int(11) NOT NULL AUTO_INCREMENT,
     AbilityID int(11),
+    UserID int(11),
     AbilityUserInfo TEXT,
     AbilityUpVote int(11),
     AbilityDownVote int(11),
     PRIMARY KEY (AbilityInfoID),
-    FOREIGN KEY (AbilityID) REFERENCES Abilities(AbilityID)
+    FOREIGN KEY (AbilityID) REFERENCES Abilities(AbilityID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )AUTO_INCREMENT=1;
 
 CREATE TABLE DotaBaseDB.Counters (
     CounterID int(11) NOT NULL AUTO_INCREMENT,
     HeroID int(11),
+    UserID int(11),
     CounterUserInfo TEXT,
     CounterUpVote int(11),
     CounterDownVoter int(11),
     PRIMARY KEY (CounterID),
-    FOREIGN KEY (HeroID) REFERENCES Heroes(HeroID)
+    FOREIGN KEY (HeroID) REFERENCES Heroes(HeroID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )AUTO_INCREMENT=1;
 
 CREATE TABLE DotaBaseDB.Items (
@@ -52,11 +64,13 @@ CREATE TABLE DotaBaseDB.Items (
 CREATE TABLE DotaBaseDB.ItemInfo (
     ItemInfoID int(11) NOT NULL AUTO_INCREMENT,
     ItemID int(11),
+    UserID int(11),
     ItemUserInfo TEXT,
     ItemUpVote int(11),
     ItemDownVote int(11),
     PRIMARY KEY (ItemInfoID),
-    FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+    FOREIGN KEY (ItemID) REFERENCES Items(ItemID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )AUTO_INCREMENT=1;
 
 CREATE TABLE DotaBaseDB.HeroItems (
@@ -77,16 +91,19 @@ CREATE TABLE DotaBaseDB.Disscussion (
     Upvote int(11),
     DownVote int(11),
     PRIMARY KEY (LogID),
-    FOREIGN KEY (HeroID) REFERENCES Heroes(HeroID)
+    FOREIGN KEY (HeroID) REFERENCES Heroes(HeroID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )AUTO_INCREMENT=1;
 
 CREATE TABLE DotaBaseDB.Clips (
     ClipID int(11),
     HeroID int(11),
+    UserID int(11),
     ClipUpVote int(11),
     ClipDownVote int(11),
     PRIMARY KEY (ClipID),
-    FOREIGN KEY (HeroID) REFERENCES Heroes(HeroID)
+    FOREIGN KEY (HeroID) REFERENCES Heroes(HeroID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
 -- INSERT HEROES INTO DATABASE
@@ -548,4 +565,12 @@ VALUES
 ('15','Chaos Strike','x'),
 ('15','Phantasm','x'),
 ('15','Chaos Bolt - Shard Ability Upgrade','x'),
-('15','Phantasm - Scepter Ability Upgrade','x');
+('15','Phantasm - Scepter Ability Upgrade','x');#
+
+INSERT INTO DotaBaseDB.Users (Username, UserPassword)
+VALUES
+('test', 'test');
+
+INSERT INTO DotaBaseDB.Counters (HeroID, UserID, CounterUserInfo)
+VALUES
+('2', '1', 'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.');

@@ -37,6 +37,9 @@ body {
 .fcont{
     float: right;
     height: auto;
+    max-width: 100px;
+    border-style: solid;
+    border-color: aqua;
 }
 
 .fheroes{
@@ -55,6 +58,8 @@ body {
     display: block;
     height: auto;
     width: 20%;
+    border-style: solid;
+    border-color: aqua;
 }
 
 footer {
@@ -127,13 +132,12 @@ footer {
 }
 
 .himg {
-    width: 25%;  
+    width: 20%;  
     border-radius: 5px;
 }
 
 .herotitle{
     display: inline-block;
-    margin-left: 20px;
     vertical-align: top;
     color: rgb(102, 252, 241);  
 }
@@ -144,10 +148,35 @@ footer {
     border-color: aqua;
 }
 
-.herocounters {
+.counterstitle {
+   
+}
+
+.herocounterto, .herocounteredby {
     margin-top: 10px;
     border-style: solid;
     border-color: aqua;
+    position: relative;
+}
+
+.counterto, .counteredby {
+    display: inline-block;
+}
+
+.addcounterbutton {
+    float: right;
+    border-radius: 100%;
+    background-color: rgb(102, 252, 241);
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
+}
+
+.counterdropdown {
+   cursor: pointer;
+   display: none;
 }
 
 .heroitems {
@@ -160,4 +189,64 @@ footer {
     margin-top: 10px;
     border-style: solid;
     border-color: aqua;
+}
+
+.login, .register {
+    width: 400px;
+    background-color: rgb(11, 12, 16);
+    box-shadow: 0 0 9px 0 rgb(31, 40, 51);
+    margin: 100px auto;
+}
+.login h1, .register h1 {
+    text-align: center;
+    color: rgb(102, 252, 241);
+    font-size: 24px;
+    padding: 20px 0 20px 0;
+    border-bottom: 1px solid rgb(102, 252, 241);
+}
+.login .links, .register .links {
+    display: flex;
+    padding: 0 15px;
+}
+.login .links a, .register .links a {
+    color: #adb2ba;
+    text-decoration: none;
+    display: inline-flex;
+    padding: 0 10px 10px 10px;
+    font-weight: bold;
+}
+.login .links a:hover, .register .links a:hover {
+    color: white;
+}
+.login .links a.active, .register .links a.active {
+    border-bottom: 3px solid rgb(102, 252, 241);
+    color: rgb(102, 252, 241);
+}
+.login form, .register form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+}
+.login form input[type="password"], .login form input[type="text"], .login form input[type="email"], .register form input[type="password"], .register form input[type="text"], .register form input[type="email"] {
+    width: 310px;
+    height: 50px;
+    border: 1px solid #dee0e4;
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+.login form input[type="submit"], .register form input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+    transition: background-color 0.2s;
+}
+.login form input[type="submit"]:hover, .register form input[type="submit"]:hover {
+    background-color: rgb(102, 252, 241);
+    transition: background-color 0.2s;
 }

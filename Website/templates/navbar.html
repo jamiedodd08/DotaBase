@@ -22,6 +22,11 @@
                 <li><a href="/items">Items</a></li>
                 <li><a href="/teamfinder">Team Finder</a></li>
             </ul>
+            {% if session['username'] %}
+                <a href="/logout" alt="logoutbutton" class="logoutbutton">logout</a>
+                {% else %}
+                <a href="/login" alt="loginbutton" class="loginbutton">Login</a>
+            {% endif %}
         </nav>
     </header>
 </body>
