@@ -13,6 +13,20 @@ app.config['MYSQL_USER'] = "root"
 app.config['MYSQL_PASSWORD'] = ""
 app.config['MYSQL_DB'] = "DotaBaseDB"
 
+def addcounterto(cur):
+    counterinfo = request.form
+    name = counterinfo['countertoname']
+    info = counterinfo['countertoinfo']
+    cur.execute("INSERT INTO CountersTo(HeroID, CounterUserInfo) VALUES(%s, %s)",(name, info))
+    mysql.connection.commit()
+
+def addcounteredby(cur):
+    counterinfo = request.form
+    name = counterinfo['counteredbyname']
+    info = counterinfo['counteredbyinfo']
+    cur.execute("INSERT INTO CounteredBy(HeroID, CounteredUserInfo) VALUES(%s, %s)",(name, info))
+    mysql.connection.commit()
+    
 @app.before_request
 def before_request():
     g.user = None
@@ -84,22 +98,36 @@ def home():
 def heroes():
     return render_template("heroPool.html")
 
-@app.route('/abaddon')
+@app.route('/abaddon', methods=['GET', 'POST'])
 def abaddon():
     hname = "Abaddon"
     himg = "static/images/heroes/abaddon.png"
     cur = mysql.connection.cursor()
     cur.execute("SELECT HeroID,HeroName FROM Heroes")
     fetchnames = cur.fetchall()
-    cur.execute("SELECT HeroID,UserID,CounterUserInfo FROM Counters")
-    fetchcounter = cur.fetchall()
-    cur.close()
-    return render_template("hero.html", heroname=hname, heroimg=himg, heronames=fetchnames, counterinfo=fetchcounter)
+    cur.execute("SELECT Heroes.HeroIconLink, CountersTo.CounterUserInfo, Heroes.HeroName FROM Heroes INNER JOIN CountersTo ON CountersTo.HeroID=Heroes.HeroID")
+    fetchcounterto = cur.fetchall()
+    cur.execute("SELECT Heroes.HeroIconLink, CounteredBy.CounteredUserInfo, Heroes.HeroName FROM Heroes INNER JOIN CounteredBy ON CounteredBy.HeroID=Heroes.HeroID")
+    fetchcounteredby = cur.fetchall()
+    if request.method == 'POST':
+        if "countertosubmit" in request.form:
+            addcounterto(cur)
+            return redirect(request.url)
+        elif "counteredbysubmit" in request.form:
+            addcounteredby(cur)
+            return redirect(request.url)
+    return render_template("hero.html", heroname=hname, heroimg=himg, heronames=fetchnames, countertoinfo=fetchcounterto, counteredbyinfo=fetchcounteredby)
 
 @app.route('/alchemist')
-def alchesmist():
+def alchemist():
     hname = "Alchemist"
     himg = "static/images/heroes/alchemist.png"
+    return render_template("hero.html", heroname=hname, heroimg=himg)
+
+@app.route('/ancient-apparition')
+def ancient_apparition():
+    hname = "Ancient Apparition"
+    himg = "static/images/heroes/ancient_apparition.png"
     return render_template("hero.html", heroname=hname, heroimg=himg)
 
 if __name__ == '__main__':

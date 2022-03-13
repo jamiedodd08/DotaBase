@@ -133,6 +133,8 @@ footer {
 
 .himg {
     width: 20%;  
+
+    height: auto;
     border-radius: 5px;
 }
 
@@ -149,7 +151,17 @@ footer {
 }
 
 .counterstitle {
-   
+    display: inline-block;
+}
+
+.fa-eye {
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.fa-eye:hover {
+    color: #adb2ba;
 }
 
 .herocounterto, .herocounteredby {
@@ -159,24 +171,73 @@ footer {
     position: relative;
 }
 
-.counterto, .counteredby {
-    display: inline-block;
+.counterinfoblock {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
-.addcounterbutton {
-    float: right;
-    border-radius: 100%;
-    background-color: rgb(102, 252, 241);
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-    color: black;
+.fa-thumbs-up, .fa-thumbs-down {
+    color: white;
+    font-size: 25px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
-.counterdropdown {
-   cursor: pointer;
-   display: none;
+.fa-thumbs-up:hover {
+    color: greenyellow;
+    transition: 0.4s;
+}
+
+.fa-thumbs-down:hover {
+    color: red;
+    transition: 0.4s;
+}
+
+.fa-circle-plus {
+    float: right;
+    color: rgb(102, 252, 241);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.fa-circle-plus:hover {
+    color: greenyellow;
+    transition: 0.4s;
+}
+
+.countertoname {
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.countertoinfo {
+    resize: none;
+    width: 80%;
+    height: 100px;
+}
+
+.countertosubmit {
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.counteredbyname {
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.counteredbyinfo {
+    resize: none;
+    width: 80%;
+    height: 100px;
+}
+
+.counteredbysubmit {
+    cursor: pointer;
+    vertical-align: top;
 }
 
 .heroitems {

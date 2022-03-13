@@ -7,6 +7,8 @@
     <link rel="icon" type="image/x-icon" href="static/images/logo4.png">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/addcounter.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/showhide.js') }}"></script>
+    <script src="https://kit.fontawesome.com/46aee2db62.js" crossorigin="anonymous"></script>
     <title>{{heroname}}</title>
 </head>
 <body>
@@ -18,25 +20,77 @@
         </div>
         <h2 class="abilitiestitle">Abilities</h2>
         <div class="heroabilities">
-            
+           
         </div>
         <h2 class="counterstitle">Counters</h2>
+        <i onclick="myFunction(this)" class="fa fa-eye"></i>
+        <!-- HERO COUNTERS X HERO SECTION -->
         <div class="herocounterto">
-            <h3 class="counterto">Counter To:</h3>
             {% if session['username'] %}
-                <button onclick="toggle()" class="addcounterbutton">+</button>
+                <i onclick="addcounter(this)" class="fa-solid fa-circle-plus"></i>
             {% endif %}
-            <p>{{counterinfo}}</p>
-            <div id="counterdropdown">
-                <SELECT>
-                    {% for i in heronames %}
-                        <option value={{i[0]}}>{{i[1]}}</option>
-                    {% endfor %}
-                </SELECT>
-            </div>
+            <h3 class="countertotitle">Counter To:</h3>
+                {% for i in countertoinfo %}
+                <div class="counterinfoblock">
+                    <div class="countericons">
+                        <a href={{i[2]}}><img src={{i[0]}}></a>
+                    </div>
+                    <p class="countertext">{{i[1]}}</p>
+                    {% if session['username'] %}
+                    <div class="voting">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <i class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% if session['username'] %}
+                    <div class="addcounterto" style="display: none;">
+                        <form method="POST" name="addcountertoform" id="addcountertoform">
+                            <SELECT class="countertoname" name="countertoname">
+                                {% for i in heronames %}
+                                    <option value={{i[0]}}>{{i[1]}}</option>
+                                {% endfor %}
+                            </SELECT>
+                            <textarea name="countertoinfo" class="countertoinfo" form="addcountertoform">Enter text here...</textarea>
+                            <input type="submit" value="Submit" class="countertosubmit" name="countertosubmit">
+                        </form> 
+                    </div>
+                {% endif %}
         </div>
+        <!-- HERO COUNTERED BY X HERO SECTION -->
         <div class="herocounteredby">
-            
+            {% if session['username'] %}
+                <i onclick="addcounteredby(this)" class="fa-solid fa-circle-plus"></i>
+            {% endif %}
+            <h3 class="countertotitle">Countered by:</h3>
+            {% for i in counteredbyinfo %}
+                <div class="counterinfoblock">
+                    <div class="countericons">
+                        <a href={{i[2]}}><img src={{i[0]}}></a>
+                    </div>
+                    <p class="countertext">{{i[1]}}</p>
+                    {% if session['username'] %}
+                    <div class="voting">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <i class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% if session['username'] %}
+                    <div class="addcounteredby" style="display: none;">
+                        <form method="POST" name="addcounteredbyform" id="addcounteredbyform">
+                            <SELECT class="counteredbyname" name="counteredbyname">
+                                {% for i in heronames %}
+                                    <option value={{i[0]}}>{{i[1]}}</option>
+                                {% endfor %}
+                            </SELECT>
+                            <textarea name="counteredbyinfo" class="counteredbyinfo" form="addcounteredbyform">Enter text here...</textarea>
+                            <input type="submit" value="Submit" class="counteredbysubmit" name="counteredbysubmit">
+                        </form> 
+                    </div>
+                {% endif %}
         </div>
         <h2 class="itemstitle">Items</h2>
         <div class="heroitems">

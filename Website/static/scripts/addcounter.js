@@ -1,11 +1,21 @@
-function toggle() {
-    var x = document.getElementById("counterdropdown");
-
-    if(x.style.display === "none") {
-        x.style.display = "block";
+function addcounter(x) {
+    var g = document.querySelector('.addcounterto');
+    if(g.style.display === "none") {
+        g.style.display = "block";
     }
 
     else {
-        x.style.display = "none";
+        g.style.display = "none";
     }
-}
+  }
+
+  function addcounteredby(x) {
+    var g = document.querySelector('.addcounteredby');
+    if(g.style.display === "none") {
+        g.style.display = "block";
+    }
+
+    else {
+        g.style.display = "none";
+    }
+  }
