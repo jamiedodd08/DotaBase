@@ -36,12 +36,33 @@
                         <a href={{i[2]}}><img src={{i[0]}}></a>
                     </div>
                     <p class="countertext">{{i[1]}}</p>
+                    <!-- THUMBS UP AND DOWN VOTING FOR EACH POST -->
                     {% if session['username'] %}
                     <div class="voting">
-                        <i class="fa-solid fa-thumbs-up"></i>
-                        <i class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                        <form method="POST" name="upvote" id="upvote">
+                            <input type="hidden" id="bool" name="bool" value="1">
+                            <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
+                            <button type="submit" value="Submit" class="upvote" name="upvote">
+                                <i class="fa-solid fa-thumbs-up"></i>
+                            </button>
+                        </form>
+                        <form method="POST" name="downvote" id="downvote">
+                            <input type="hidden" id="bool" name="bool" value="1">
+                            <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
+                            <button type="submit" value="Submit" class="downvote" name="downvote">
+                                <i class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                            </button>
+                        </form>
                     </div>
                     {% endif %}
+                    <!-- POST VOTES -->
+                    <div class="votes">
+                        {% for j in t %}
+                            {% if j[1] == i[3]%}
+                                {{j[0]}}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
                 {% endfor %}
                 {% if session['username'] %}

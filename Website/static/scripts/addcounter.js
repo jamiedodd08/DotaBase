@@ -9,7 +9,7 @@ function addcounter(x) {
     }
   }
 
-  function addcounteredby(x) {
+function addcounteredby(x) {
     var g = document.querySelector('.addcounteredby');
     if(g.style.display === "none") {
         g.style.display = "block";

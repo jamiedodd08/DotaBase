@@ -25,14 +25,73 @@ def addcounteredby(cur):
     name = counterinfo['counteredbyname']
     info = counterinfo['counteredbyinfo']
     cur.execute("INSERT INTO CounteredBy(HeroID, CounteredUserInfo) VALUES(%s, %s)",(name, info))
-    mysql.connection.commit()
+    mysql.connection.commit()     
+
+def upvote(cur):
+    user = session['id']
+    uservote = request.form
+    vote = uservote['bool']
+    counterid = uservote['counterid']
+
+    cur.execute('SELECT upvote, downvote FROM CounterToVote WHERE CounterID = %s AND UserID = %s',(counterid, user))
+    a = cur.fetchone()
+
+    if a is None:
+        cur.execute("INSERT INTO CounterToVote(UserID, CounterID, upvote) VALUES(%s,%s,%s)",(user, counterid, vote))
+        cur.execute("UPDATE CountersTo SET CounterUpVote = CounterUpVote + 1 WHERE CounterID = %s",(counterid))
+        mysql.connection.commit()
+        return redirect(request.url)
     
+    if a[1] == 1:
+        cur.execute("DELETE FROM CounterToVote WHERE CounterID = %s AND UserID = %s",(counterid, user))
+        cur.execute("UPDATE CountersTo SET CounterDownVote = CounterDownVote - 1 WHERE CounterID = %s",(counterid))
+        cur.execute("INSERT INTO CounterToVote(UserID, CounterID, upvote) VALUES(%s,%s,%s)",(user, counterid, vote))
+        cur.execute("UPDATE CountersTo SET CounterUpVote = CounterUpVote + 1 WHERE CounterID = %s",(counterid))
+        mysql.connection.commit()
+
+    else:
+        cur.execute("DELETE FROM CounterToVote WHERE CounterID = %s AND UserID = %s",(counterid, user))
+        cur.execute("UPDATE CountersTo SET CounterUpVote = CounterUpVote - 1 WHERE CounterID = %s",(counterid))
+        mysql.connection.commit()
+
+def downvote(cur):
+    user = session['id']
+    uservote = request.form
+    vote = uservote['bool']
+    counterid = uservote['counterid']
+
+    cur.execute('SELECT upvote, downvote FROM CounterToVote WHERE CounterID = %s AND UserID = %s',(counterid, user))
+    a = cur.fetchone()
+
+    if a is None:
+        cur.execute("INSERT INTO CounterToVote(UserID, CounterID, downvote) VALUES(%s,%s,%s)",(user, counterid, vote))
+        cur.execute("UPDATE CountersTo SET CounterDownVote = CounterDownVote + 1 WHERE CounterID = %s",(counterid))
+        mysql.connection.commit()
+        return redirect(request.url)
+
+    if a[0] == 1:
+        cur.execute("DELETE FROM CounterToVote WHERE CounterID = %s AND UserID = %s",(counterid, user))
+        cur.execute("UPDATE CountersTo SET CounterUpVote = CounterUpVote - 1 WHERE CounterID = %s",(counterid))
+        cur.execute("INSERT INTO CounterToVote(UserID, CounterID, downvote) VALUES(%s,%s,%s)",(user, counterid, vote))
+        cur.execute("UPDATE CountersTo SET CounterDownVote = CounterDownVote + 1 WHERE CounterID = %s",(counterid))
+        mysql.connection.commit()
+
+    else:
+        cur.execute("DELETE FROM CounterToVote WHERE CounterID = %s AND UserID = %s",(counterid, user))
+        cur.execute("UPDATE CountersTo SET CounterDownVote = CounterDownVote - 1 WHERE CounterID = %s",(counterid))
+        mysql.connection.commit()
+    
+def gettotalvotes(cur):
+    cur.execute("SELECT CounterToTotalVotes, CounterID FROM CountersTo")
+    votes = cur.fetchall()
+    return votes
+
+
 @app.before_request
 def before_request():
     g.user = None
-
-    if 'username' in session:
-        user = session['username']
+    if 'id' in session:
+        user = session['id']
         g.user = user
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -105,18 +164,27 @@ def abaddon():
     cur = mysql.connection.cursor()
     cur.execute("SELECT HeroID,HeroName FROM Heroes")
     fetchnames = cur.fetchall()
-    cur.execute("SELECT Heroes.HeroIconLink, CountersTo.CounterUserInfo, Heroes.HeroName FROM Heroes INNER JOIN CountersTo ON CountersTo.HeroID=Heroes.HeroID")
+    cur.execute("SELECT Heroes.HeroIconLink, CountersTo.CounterUserInfo, Heroes.HeroName, CountersTo.CounterID FROM Heroes INNER JOIN CountersTo ON CountersTo.HeroID=Heroes.HeroID")
     fetchcounterto = cur.fetchall()
     cur.execute("SELECT Heroes.HeroIconLink, CounteredBy.CounteredUserInfo, Heroes.HeroName FROM Heroes INNER JOIN CounteredBy ON CounteredBy.HeroID=Heroes.HeroID")
     fetchcounteredby = cur.fetchall()
-    if request.method == 'POST':
-        if "countertosubmit" in request.form:
-            addcounterto(cur)
-            return redirect(request.url)
-        elif "counteredbysubmit" in request.form:
-            addcounteredby(cur)
-            return redirect(request.url)
-    return render_template("hero.html", heroname=hname, heroimg=himg, heronames=fetchnames, countertoinfo=fetchcounterto, counteredbyinfo=fetchcounteredby)
+
+    t = gettotalvotes(cur)
+
+    if "countertosubmit" in request.form:
+        addcounterto(cur)
+        return redirect(request.url)
+    if "counteredbysubmit" in request.form:
+        addcounteredby(cur)
+        return redirect(request.url)
+    if "upvote" in request.form:
+        upvote(cur)
+        return redirect(request.url)
+    if "downvote" in request.form:
+        downvote(cur)
+        return redirect(request.url)   
+
+    return render_template("hero.html", heroname=hname, heroimg=himg, heronames=fetchnames, countertoinfo=fetchcounterto, counteredbyinfo=fetchcounteredby, t=t)
 
 @app.route('/alchemist')
 def alchemist():

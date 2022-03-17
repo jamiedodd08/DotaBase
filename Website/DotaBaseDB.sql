@@ -35,36 +35,66 @@ CREATE TABLE DotaBaseDB.AbilityInfo (
     AbilityID int(11),
     UserID int(11),
     AbilityUserInfo TEXT,
-    AbilityUpVote int(11),
-    AbilityDownVote int(11),
+    AbilityUpVote int DEFAULT 0,
+    AbilityDownVote int DEFAULT 0,
     PRIMARY KEY (AbilityInfoID),
     FOREIGN KEY (AbilityID) REFERENCES Abilities(AbilityID),
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )AUTO_INCREMENT=1;
+
+CREATE TABLE DotaBaseDB.AbilityVote (
+    UserID int(11),
+    AbilityInfoID int(11),
+    AbilityVote BOOLEAN NOT NULL,
+    PRIMARY KEY (UserID, AbilityInfoID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (AbilityInfoID) REFERENCES AbilityInfo(AbilityInfoID)
+);
 
 CREATE TABLE DotaBaseDB.CountersTo (
     CounterID int(11) NOT NULL AUTO_INCREMENT,
     HeroID int(11),
     UserID int(11),
     CounterUserInfo TEXT,
-    CounterUpVote int(11),
-    CounterDownVote int(11),
+    CounterUpVote int DEFAULT 0,
+    CounterDownVote int DEFAULT 0,
+    CounterToTotalVotes int AS (CounterUpVote - CounterDownVote),
     PRIMARY KEY (CounterID),
     FOREIGN KEY (HeroID) REFERENCES Heroes(HeroID),
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )AUTO_INCREMENT=1;
+
+CREATE TABLE DotaBaseDB.CounterToVote (
+    UserID int(11),
+    CounterID int(11),
+    upvote BOOLEAN NOT NULL,
+    downvote BOOLEAN NOT NULL,
+    PRIMARY KEY (UserID, CounterID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (CounterID) REFERENCES CountersTo(CounterID)
+);
 
 CREATE TABLE DotaBaseDB.CounteredBy (
     CounteredID int(11) NOT NULL AUTO_INCREMENT,
     HeroID int(11),
     UserID int(11),
     CounteredUserInfo TEXT,
-    CounteredUpVote int(11),
-    CounteredDownVoter int(11),
+    CounteredUpVote int DEFAULT 0,
+    CounteredDownVote int DEFAULT 0,
+    CounteredTotalVote int(11),
     PRIMARY KEY (CounteredID),
     FOREIGN KEY (HeroID) REFERENCES Heroes(HeroID),
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )AUTO_INCREMENT=1;
+
+CREATE TABLE DotaBaseDB.CounteredByVote (
+    UserID int(11),
+    CounteredID int(11),
+    CounteredVote BOOLEAN NOT NULL,
+    PRIMARY KEY (UserID, CounteredID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (CounteredID) REFERENCES CounteredBy(CounteredID)
+);
 
 CREATE TABLE DotaBaseDB.Items (
     ItemID int(11) NOT NULL AUTO_INCREMENT,
@@ -78,21 +108,41 @@ CREATE TABLE DotaBaseDB.ItemInfo (
     ItemID int(11),
     UserID int(11),
     ItemUserInfo TEXT,
-    ItemUpVote int(11),
-    ItemDownVote int(11),
+    ItemUpVote int DEFAULT 0,
+    ItemDownVote int DEFAULT 0,
+    ItemTotalVote int(11),
     PRIMARY KEY (ItemInfoID),
     FOREIGN KEY (ItemID) REFERENCES Items(ItemID),
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )AUTO_INCREMENT=1;
 
+CREATE TABLE DotaBaseDB.ItemVote (
+    UserID int(11),
+    ItemInfoID int(11),
+    ItemVote int(11),
+    PRIMARY KEY (UserID, ItemInfoID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (ItemInfoID) REFERENCES ItemInfo(ItemInfoID)
+);
+
 CREATE TABLE DotaBaseDB.HeroItems (
-    HeroItem int(11),
+    HeroItemID int(11) NOT NULL AUTO_INCREMENT,
     ItemID int(11),
     HeroItemUserInfo TEXT,
-    HeroItemUpVote int(11),
-    HeroItemDownVote int(11),
-    PRIMARY KEY (HeroItem),
+    HeroItemUpVote int DEFAULT 0,
+    HeroItemDownVote int DEFAULT 0,
+    HeroItemTotalVote int(11),
+    PRIMARY KEY (HeroItemID),
     FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+)AUTO_INCREMENT=1;
+
+CREATE TABLE DotaBaseDB.HeroItemVote (
+    UserID int(11),
+    HeroItemID int(11),
+    HeroItemVote int(11),
+    PRIMARY KEY (UserID, HeroItemID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (HeroItemID) REFERENCES HeroItems(HeroItemID)
 );
 
 CREATE TABLE DotaBaseDB.Disscussion (
@@ -106,17 +156,6 @@ CREATE TABLE DotaBaseDB.Disscussion (
     FOREIGN KEY (HeroID) REFERENCES Heroes(HeroID),
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )AUTO_INCREMENT=1;
-
-CREATE TABLE DotaBaseDB.Clips (
-    ClipID int(11),
-    HeroID int(11),
-    UserID int(11),
-    ClipUpVote int(11),
-    ClipDownVote int(11),
-    PRIMARY KEY (ClipID),
-    FOREIGN KEY (HeroID) REFERENCES Heroes(HeroID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
 
 -- INSERT HEROES INTO DATABASE
 INSERT INTO DotaBaseDB.Heroes (HeroName, HeroIconLink, HeroAttribute, HeroRole, HeroLane1, HeroLane2)
@@ -581,13 +620,17 @@ VALUES
 
 INSERT INTO DotaBaseDB.Users (Username, UserPassword)
 VALUES
-('test', 'test');
+('test', 'test'),
+('test2', 'test2'),
+('test3', 'test3'),
+('test4', 'test4'),
+('test5', 'test5'),
+('test6', 'test6');
 
 INSERT INTO DotaBaseDB.CountersTo (HeroID, UserID, CounterUserInfo)
 VALUES
 ('2', '1', 'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'),
 ('4', '1', 'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.');
-
 
 INSERT INTO DotaBaseDB.CounteredBy (HeroID, UserID, CounteredUserInfo)
 VALUES
