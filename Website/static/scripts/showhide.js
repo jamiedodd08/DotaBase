@@ -1,4 +1,4 @@
-function myFunction(x) {
+function hidecounters(x) {
     var g = document.querySelector('.herocounterto');
     var j = document.querySelector('.herocounteredby');
     x.classList.toggle("fa-eye-slash");
@@ -13,5 +13,19 @@ function myFunction(x) {
     }
   }
 
+function hideitems(x) {
+    var g = document.querySelector('.heroitemsfor');
+    var j = document.querySelector('.heroitemsagainst');
+    x.classList.toggle("fa-eye-slash");
+    if(g.style.display === "none") {
+        g.style.display = "block";
+        j.style.display = "block";
+    }
+
+    else {
+        g.style.display = "none";
+        j.style.display = "none";
+    }
+  }
 
 

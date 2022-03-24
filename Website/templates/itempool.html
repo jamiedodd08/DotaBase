@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
+    <link rel="icon" type="image/x-icon" href="static/images/logo4.png">
+    <title>Items</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <section class="section">  
+        <section class="imggridheader">
+        </section>
+        <h1>Basic Items</h1>
+        <h3 class="itemtype">Consumables</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/aghanim's-shard"><img src="static/images/items/aghanims_shard.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Aghanim's Shard</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/bottle"><img src="static/images/items/bottle.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Bottle</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/clarity"><img src="static/images/items/clarity.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Clarity</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/dust-of-appearance"><img src="static/images/items/dust_of_appearance.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Dust of Appearance</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/enchanted-mango"><img src="static/images/items/enchanted_mango.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Enchanted Mango</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/faerie-fire"><img src="static/images/items/faerie_fire.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Faerie Fire</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/healing-salve"><img src="static/images/items/healing_salve.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Healing Salve</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/observer-ward"><img src="static/images/items/observer_ward.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Observer Ward</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/sentry-ward"><img src="static/images/items/sentry_ward.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Sentry Ward</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/smoke-of-deceit"><img src="static/images/items/smoke_of_deceit.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Smoke of Deceit</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/tango"><img src="static/images/items/tango.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Tango</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/tome-of-knowledge"><img src="static/images/items/tome_of_knowledge.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Tome of Knowledge</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/town-portal-scroll"><img src="static/images/items/town_portal_scroll.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Town Portal Scroll</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="itemtype">Attributes</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/band-of-elvenskin"><img src="static/images/items/band_of_elvenskin.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Band of Elvenskin</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/belt-of-strength"><img src="static/images/items/belt_of_strength.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Belt of Strength</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/blade-of-alacrity"><img src="static/images/items/blade_of_alacrity.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Blade of Alacrity</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/circlet"><img src="static/images/items/circlet.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Circlet</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/crown"><img src="static/images/items/crown.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Crown</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/gauntlets-of-strength"><img src="static/images/items/gauntlets_of_strength.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Gauntlets of Strength</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/iron-branch"><img src="static/images/items/iron_branch.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Iron Branch</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/mantle-of-intelligence"><img src="static/images/items/mantle_of_intelligence.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Mantle of Intelligence</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ogre-axe"><img src="static/images/items/ogre_axe.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Ogre Axe</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/robe-of-the-magi"><img src="static/images/items/robe_of_the_magi.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Robe of the Magi</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/slippers-of-agility"><img src="static/images/items/slippers_of_agility.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Slippers of Agility</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/staff-of-wizardry"><img src="static/images/items/staff_of_wizardry.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Staff of Wizardry</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="itemtype">Equipment</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/blades-of-attack"><img src="static/images/items/blades_of_attack.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Blades of Attack</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/blight-stone"><img src="static/images/items/blight_stone.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Blight Stone</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/broadsword"><img src="static/images/items/broadsword.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Broadsword</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/chainmail"><img src="static/images/items/chainmail.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Chainmail</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/claymore"><img src="static/images/items/claymore.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Claymore</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/gloves-of-haste"><img src="static/images/items/gloves_of_haste.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Gloves of Haste</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/helm-of-iron-will"><img src="static/images/items/helm_of_iron_will.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Helm of Iron Will</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/infused-raindrops"><img src="static/images/items/infused_raindrop.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Infused Raindrops</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/javelin"><img src="static/images/items/javelin.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Javelin</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/mithril-hammer"><img src="static/images/items/mithril_hammer.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Mithrill Hammer</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/orb-of-venom"><img src="static/images/items/orb_of_venom.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Orb of Venom</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/quarterstaff"><img src="static/images/items/quarterstaff.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Quarterstaff</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/quelling-blade"><img src="static/images/items/quelling_blade.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Quelling Blade</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ring-of-protection"><img src="static/images/items/ring_of_protection.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Ring of Protection</div>
+                </div>
+            </div>
+        </div>
+        <h3 class="itemtype">Miscellaneous</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/blink-dagger"><img src="static/images/items/blink_dagger.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Blink Dagger</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/blitz-knuckles"><img src="static/images/items/blitz_knuckles.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Blitz Knuckles</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/boots-of-speed"><img src="static/images/items/boots_of_speed.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Boots of Speed</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/cloak"><img src="static/images/items/cloak.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Cloak</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/fluffy-hat"><img src="static/images/items/fluffy_hat.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Fluffy Hat</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/gem-of-true-sight"><img src="static/images/items/gem_of_true_sight.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Gem of True Sight</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ghost-scepter"><img src="static/images/items/ghost_scepter.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Ghost Scepter</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/magic-stick"><img src="static/images/items/magic_stick.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Magic Stick</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/morbid-mask"><img src="static/images/items/morbid_mask.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Morbid Mask</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ring-of-regen"><img src="static/images/items/ring_of_regen.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Ring of Regen</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/sage's-mask"><img src="static/images/items/sages_mask.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Sage's Mask</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/shadow-amulet"><img src="static/images/items/shadow_amulet.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Shadow Amulet</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/voodoo-mask"><img src="static/images/items/voodoo_mask.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Voodoo Mask</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/wind-lace"><img src="static/images/items/wind_lace.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Wind Lace</div>
+                </div>
+            </div>
+        </div>
+        <h3 class="itemtype">Secret Shop</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/demon-edge"><img src="static/images/items/demon_edge.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Demon Edge</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/eaglesong"><img src="static/images/items/eaglesong.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Eaglesong</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/energy-booster"><img src="static/images/items/energy_booster.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Energy Booster</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/hyperstone"><img src="static/images/items/hyperstone.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Hyperstone</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/mystic-staff"><img src="static/images/items/mystic_staff.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Mystic Staff</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/platemail"><img src="static/images/items/platemail.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Platemail</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/point-booster"><img src="static/images/items/point_booster.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Point Booster</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/reaver"><img src="static/images/items/reaver.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Reaver</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ring-of-health"><img src="static/images/items/ring_of_health.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Ring of Health</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/sacred-relic"><img src="static/images/items/sacred_relic.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Sacred Relic</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/talisman-of-evasion"><img src="static/images/items/talisman_of_evasion.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Talisman of Evasion</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ultimate-orb"><img src="static/images/items/ultimate_orb.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Ultimate Orb</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/vitality-booster"><img src="static/images/items/vitality_booster.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Vitality Booster</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/void-stone"><img src="static/images/items/void_stone.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Void Stone</div>
+                </div>
+            </div>
+        </div>
+        <h3 class="itemtype">Roshan Drops</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/aegis-of-the-immortal"><img src="static/images/items/aegis_of_the_immortal.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Aegis of the Immortal</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/aghanim's-blessing"><img src="static/images/items/aghanims_blessing.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Aghanim's Blessing</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/cheese"><img src="static/images/items/cheese.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Cheese</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/refresher-shard"><img src="static/images/items/refresher_shard.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Refresher Shard</div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Upgraded Items</h2>
+        <h3 class="itemtype">Accessories</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/boots-of-travel"><img src="static/images/items/boots_of_travel.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Boots of Travel</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/boots-of-travel-2"><img src="static/images/items/boots_of_travel_2.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Boots of Travel 2</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/bracer"><img src="static/images/items/bracer.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Bracer</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/falcon-blade"><img src="static/images/items/falcon_blade.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Falcon Blade</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/hand-of-midas"><img src="static/images/items/hand_of_midas.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Hand of Midas</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/helm-of-the-dominator"><img src="static/images/items/helm_of_the_dominator.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Helm of the Dominator</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/helm-of-the-overlord"><img src="static/images/items/helm_of_the_overlord.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Helm of the Overlord</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/magic-stick"><img src="static/images/items/magic_stick.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Magic Stick</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/mask-of-madness"><img src="static/images/items/mask_of_madness.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Mask of Madness</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/moon-shard"><img src="static/images/items/moon_shard.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Moon Shard</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/null-talisman"><img src="static/images/items/null_talisman.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Null Talisman</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/oblivion-staff"><img src="static/images/items/oblivion_staff.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Oblivion Staff</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/orb-of-corrosion"><img src="static/images/items/orb_of_corrosion.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Orb of Corrosion</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/perseverance"><img src="static/images/items/perseverance.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Perseverance</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/phase-boots"><img src="static/images/items/phase_boots.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Phase Boots</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/power-treads"><img src="static/images/items/power_treads.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Power Treads</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/soul-ring"><img src="static/images/items/soul_ring.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Soul Ring</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/wraith-band"><img src="static/images/items/wraith_band.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Wraith Band</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="itemtype">Support</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/arcane-boots"><img src="static/images/items/arcane_boots.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Arcane Boots</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/boots-of-bearing"><img src="static/images/items/boots_of_bearing.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Boots of Bearing</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/buckler"><img src="static/images/items/buckler.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Buckler</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/drum-of-endurance"><img src="static/images/items/drum_of_endurance.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Drum of Endurance</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/guardian-greaves"><img src="static/images/items/guardian_greaves.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Guardian Greaves</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/headdress"><img src="static/images/items/headdress.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Headdress</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/holy-locket"><img src="static/images/items/holy_locket.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Holy Locket</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/medallion-of-courage"><img src="static/images/items/medallion_of_courage.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Medallion of Courage</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/mekansm"><img src="static/images/items/mekansm.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Mekansm</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/pipe-of-insight"><img src="static/images/items/pipe_of_insight.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Pipe of Insight</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ring-of-basilius"><img src="static/images/items/ring_of_basilius.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Ring of Basilius</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/spirit-vessel"><img src="static/images/items/spirit_vessel.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Spirit Vessel</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/tranquil-boots"><img src="static/images/items/tranquil_boots.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Tranquil Boots</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/urn-of-shadows"><img src="static/images/items/urn_of_shadows.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Urn of Shadows</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/vladmir's-offering"><img src="static/images/items/vladmirs_offering.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Vladmir's Offering</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/wraith-pact"><img src="static/images/items/wraith_pact.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Wraith Pact</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="itemtype">Magical</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/aether-lens"><img src="static/images/items/aether_lens.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Aether Lens</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/aghanim's-scepter"><img src="static/images/items/aghanims_scepter.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Aghanim's Scepter</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/dagon"><img src="static/images/items/dagon.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Dagon</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/eul's-scepter-of-divinity"><img src="static/images/items/euls_scepter_of_divinity.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Eul's Scepter of Divinity</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/force-staff"><img src="static/images/items/force_staff.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Force Staff</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/gleipnir"><img src="static/images/items/gleipnir.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Gleipnir</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/glimmer-cape"><img src="static/images/items/glimmer_cape.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Glimmer Cape</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/octarine-core"><img src="static/images/items/octarine_core.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Octarine Core</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/refresher-orb"><img src="static/images/items/refresher_orb.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Refresher Orb</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/rod-of-atos"><img src="static/images/items/rod_of_atos.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Rod of Atos</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/scythe-of-vyse"><img src="static/images/items/scythe_of_vyse.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Scythe of Vyse</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/solar-crest"><img src="static/images/items/solar_crest.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Solar Crest</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/veil-of-discord"><img src="static/images/items/veil_of_discord.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Veil of Discord</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/wind-waker"><img src="static/images/items/wind_waker.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Wind Waker</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/witch-blade"><img src="static/images/items/witch_blade.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Witch Blade</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="itemtype">Armor</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/aeon-disk"><img src="static/images/items/aeon_disk.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Aeon Disk</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/assault-cuirass"><img src="static/images/items/assault_cuirass.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Assult Cuirass</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/black-king-bar"><img src="static/images/items/black_king_bar.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Black King Bar</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/blade-mail"><img src="static/images/items/blade_mail.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Blade Mail</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/bloodstone"><img src="static/images/items/bloodstone.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Bloodstone</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/crimson-guard"><img src="static/images/items/crimson_guard.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Crimson Guard</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/eternal-shroud"><img src="static/images/items/eternal_shroud.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Eternal Shroud</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/heart-of-tarrasque"><img src="static/images/items/heart_of_tarrasque.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Heart of Tarrasque</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/hood-of-defiance"><img src="static/images/items/hood_of_defiance.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Hood of Defiance</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/hurricane-pike"><img src="static/images/items/hurricane_pike.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Hurricane Pike</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/linken's-sphere"><img src="static/images/items/linkens_sphere.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Linken's Sphere</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/lotus-orb"><img src="static/images/items/lotus_orb.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Lotus Orb</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/manta-style"><img src="static/images/items/manta_style.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Manta Style</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/shiva's-guard"><img src="static/images/items/shivas_guard.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Shiva's Guard</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/soul-booster"><img src="static/images/items/soul_booster.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Soul Booster</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/vanguard"><img src="static/images/items/vanguard.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Vanguard</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="itemtype">Weapons</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/abyssal-blade"><img src="static/images/items/abyssal_blade.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Abyssal Blade</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/armlet-of-mordiggian"><img src="static/images/items/armlet_of_mordiggian.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Armlet of Mordiggian</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/battle-fury"><img src="static/images/items/battle_fury.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Battle Fury</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/bloodthorn"><img src="static/images/items/bloodthorn.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Bloodthorn</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/butterfly"><img src="static/images/items/butterfly.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Butterfly</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/crystalys"><img src="static/images/items/crystalys.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Crystalys</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/daedalus"><img src="static/images/items/daedalus.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Daedalus</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/desolator"><img src="static/images/items/desolator.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Desolator</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/divine-rapier"><img src="static/images/items/divine_rapier.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Divine Rapier</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ethereal-blade"><img src="static/images/items/ethereal_blade.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Ethereal Blade</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/meteor-hammer"><img src="static/images/items/meteor_hammer.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Meteor Hammer</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/monkey-king-bar"><img src="static/images/items/monkey_king_bar.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Monkey King Bar</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/nullifier"><img src="static/images/items/nullifier.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Nullifier</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/radiance"><img src="static/images/items/radiance.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Radiance</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/shadow-blade"><img src="static/images/items/shadow_blade.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Shadow Balde</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/silver-edge"><img src="static/images/items/silver_edge.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Silver Edge</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/skull-basher"><img src="static/images/items/skull_basher.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Skull Basher</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="itemtype">Artifacts</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/arcane-blink"><img src="static/images/items/arcane_blink.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Aracane Blink</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/diffusal-blade"><img src="static/images/items/diffusal_blade.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Diffusal Blade</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/dragon-lance"><img src="static/images/items/dragon_lance.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Dragon Lance</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/echo-sabre"><img src="static/images/items/echo_sabre.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Echo Sabre</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/eye-of-skadi"><img src="static/images/items/eye_of_skadi.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Eye of Skadi</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/heaven's-halberd"><img src="static/images/items/heavens_halberd.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Heaven's Halberd</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/kaya"><img src="static/images/items/kaya.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Kaya</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/kaya-and-sange"><img src="static/images/items/kaya_and_sange.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Kaya and Sange</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/maelstrom"><img src="static/images/items/maelstrom.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Maelstrom</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/mage-slayer"><img src="static/images/items/mage_slayer.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Mage Slayer</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/mjollnir"><img src="static/images/items/mjollnir.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Mjollnir</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/overwhelming-blink"><img src="static/images/items/overwhelming_blink.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Overwhelming Blink</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/sange"><img src="static/images/items/sange.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Sange</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/sange-and-yasha"><img src="static/images/items/sange_and_yasha.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Sange and Yasha</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/satanic"><img src="static/images/items/satanic.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Satanic</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/swift-blink"><img src="static/images/items/swift_blink.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Swift Blink</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/yasha"><img src="static/images/items/yasha.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Yasha</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/yasha-and-kaya"><img src="static/images/items/yasha_and_kaya.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Yasha and Kaya</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Neutral Items</h2>
+        <h3 class="itemtype">Tier 1</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/arcane-ring"><img src="static/images/items/arcane_ring.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Aracane Ring</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/broom-handle"><img src="static/images/items/broom_handle.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Broom Handle</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/chipped-vest"><img src="static/images/items/chipped_vest.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Chipped Vest</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/fairy's-trinket"><img src="static/images/items/fairys_trinket.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Fairy's Trinket</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/keen-optic"><img src="static/images/items/keen_optic.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Keen Optic</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ocean-heart"><img src="static/images/items/ocean_heart.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Ocean Heart</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/pig-pole"><img src="static/images/items/pig_pole.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Pig Pole</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/possessed-mask"><img src="static/images/items/possessed_mask.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Possessed Mask</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/trusty-shovel"><img src="static/images/items/trusty_shovel.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Trusty Shovel</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/tumbler's-toy"><img src="static/images/items/tumblers_toy.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Tumbler's Toy</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="itemtype">Tier 2</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/brigand's-blade"><img src="static/images/items/brigands_blade.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Brigand's Blade</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/bullwhip"><img src="static/images/items/bullwhip.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Bullwhip</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/dragon-scale"><img src="static/images/items/dragon_scale.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Dragon Scale</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/essence-ring"><img src="static/images/items/essence_ring.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Essence Ring</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/fae-grenade"><img src="static/images/items/fae_grenade.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Fae Grenade</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/grove-bow"><img src="static/images/items/grove_bow.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Grove Bow</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/nether-shawl"><img src="static/images/items/nether_shawl.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Nether Shawl</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/philosopher's-stone"><img src="static/images/items/philosophers_stone.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Philosopher's Stone</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/pupil's-gift"><img src="static/images/items/pupils_gift.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Pupil's Gift</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/quicksilver-amulet"><img src="static/images/items/quicksilver_amulet.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Quicksilver Amulet</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ring-of-aquila"><img src="static/images/items/ring_of_aquila.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Ring of Aquila</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/vambrace"><img src="static/images/items/vambrace.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Vambrace</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="itemtype">Tier 3</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/blast-rig"><img src="static/images/items/blast_rig.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Blast Rig</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ceremonial-robe"><img src="static/images/items/ceremonial_robe.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Ceremonial Robe</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/cloak-of-flames"><img src="static/images/items/cloak_of_flames.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Cloak of Flames</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/elven-tunic"><img src="static/images/items/elven_tunic.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Elven Tunic</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/enchanted-quiver"><img src="static/images/items/enchanted_quiver.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Enchanted Quiver</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/mind-breaker"><img src="static/images/items/mind_breaker.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Mind Breaker</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/paladin-sword"><img src="static/images/items/paladin_sword.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Paladin Sword</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/psychic-headband"><img src="static/images/items/psychic_headband.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Psychic Headband</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/quickening-charm"><img src="static/images/items/quickening_charm.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Quickening Charm</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/spider-legs"><img src="static/images/items/spider_legs.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Spider Legs</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/telescope"><img src="static/images/items/telescope.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Telescope</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/titan-sliver"><img src="static/images/items/titan_sliver.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    </a><div class="itemgridtext">Titan Silver</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="itemtype">Tier 4</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/ascetic-cap"><img src="static/images/items/ascetic_cap.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Ascetic Cap</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/flicker"><img src="static/images/items/flicker.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Flicker</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ninja-gear"><img src="static/images/items/ninja_gear.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Ninja Gear</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/penta-edged-sword"><img src="static/images/items/penta_edged_sword.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Penta-Edged Sword</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/spell-prism"><img src="static/images/items/spell_prism.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Spell Prism</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/stormcrafter"><img src="static/images/items/stormcrafter.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Stormcrafter</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/the-leveller"><img src="static/images/items/the_leveller.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">The Leveller</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/timeless-relic"><img src="static/images/items/timeless_relic.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Timeless Relic</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/trickster-cloak"><img src="static/images/items/trickster_cloak.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Trickster Cloak</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/witchbane"><img src="static/images/items/witchbane.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Witchbane</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="itemtype">Tier 5</h3>
+        <div class="itemimggrid">
+            <div class="itemgridcontainer">
+                <a href="/items/apex"><img src="static/images/items/apex.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Apex</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/arcanist's-armor"><img src="static/images/items/arcanists_armor.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Arcanist's Armor</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/book-of-shadows"><img src="static/images/items/book_of_shadows.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Book of Shadows</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/book-of-the-dead"><img src="static/images/items/book_of_the_dead.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Book of the Dead</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/ex-machina"><img src="static/images/items/ex_machina.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Ex Machina</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/fallen-sky"><img src="static/images/items/fallen_sky.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Fallen Sky</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/force-boots"><img src="static/images/items/force_boots.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Force Boots</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/giant's-ring"><img src="static/images/items/giants_ring.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Giant's Ring</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/mirror-shield"><img src="static/images/items/mirror_shield.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Mirror Shield</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/pirate-hat"><img src="static/images/items/pirate_hat.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Pirate Hat</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/seer-stone"><img src="static/images/items/seer_stone.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Seer Stone</div>
+                </div>
+            </div>
+            <div class="itemgridcontainer">
+                <a href="/items/stygian-desolator"><img src="static/images/items/stygian_desolator.png" alt="itemgridimg" class="itemgridimg"></a>
+                <div class="itemoverlay">
+                    <div class="itemgridtext">Stygian Desolator</div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <footer>
+    <p>Footer</p>
+    </footer>
+</body>
+</html>

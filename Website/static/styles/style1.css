@@ -69,6 +69,7 @@ footer {
     margin-top: 10px;
 }
 
+/* hero pool grid */
 .gridheader {
     border-style: solid;
     border-color: aqua;
@@ -125,20 +126,83 @@ footer {
 .container:hover .overlay {
     opacity: 1;
 }
+/*  */
 
-.heroinfo {
+/* item pool grid */
+.itemtype {
+    border-bottom: solid;
+    width: 95%;
+}
+
+.imggridheader {
+    border-style: solid;
+    border-color: aqua;
+}
+
+.itemimggrid {
+    display: grid;
+    justify-content: left;
+    align-items: left;
+    grid-template-columns: repeat(auto-fit, minmax(100px,100px));
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 10px;
+}
+
+.itemgridimg {
+    display: grid;
+    width: 100%;
+}
+
+.itemgridcontainer {
+    position: relative;
+    width: 100%;
+}
+
+.itemgridtext {
+    position: absolute;
+    bottom:0;
+    font-size: smaller;
+    color: white;
+}
+
+.itemoverlay {
+    position: absolute;
+    font-weight: bold;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 100%;
+    max-width: 100%;
+    opacity: 0;
+    transition: 0.5s ease;
+    pointer-events: none;
+}
+
+.itemgridcontainer:hover .itemoverlay {
+    opacity: 1;
+}
+/*  */
+
+.heroinfo, .iteminfo {
     border-style: solid;
     border-color: aqua;
 }
 
 .himg {
-    width: 20%;  
-
+    min-width: 20%;  
     height: auto;
-    border-radius: 5px;
 }
 
-.herotitle{
+.itemimg {
+    width:15%;
+    height: auto;
+}
+
+.herotitle, .itemtitle{
     display: inline-block;
     vertical-align: top;
     color: rgb(102, 252, 241);  
@@ -150,7 +214,7 @@ footer {
     border-color: aqua;
 }
 
-.counterstitle {
+.counterstitle, .itemstitle, .itemtitle {
     display: inline-block;
 }
 
@@ -164,14 +228,17 @@ footer {
     color: #adb2ba;
 }
 
-.herocounterto, .herocounteredby {
+.herocounterto, .herocounteredby, .heroitemsfor, .heroitemsagainst, .itembuyfortitle, .itembuyagainsttitle {
     margin-top: 10px;
-    border-style: solid;
-    border-color: aqua;
     position: relative;
 }
 
-.counterinfoblock {
+.countertotitle, .counteredbytitle, .itemfortitle, .itemagainsttitle {
+    border-bottom: solid;
+    border-color: aqua;
+}
+
+.counterinfoblock, .itemsinfoblock {
     display: flex;
     gap: 10px;
     margin-top: 15px;
@@ -208,51 +275,29 @@ footer {
     transition: 0.4s;
 }
 
-.countertoname {
+.countertoname, .counteredbyname, .itemforname, .itemagainstname {
     cursor: pointer;
     vertical-align: top;
 }
 
-.countertoinfo {
+.countertoinfo, .counteredbyinfo, .itemforinfo, .itemagainstinfo {
     resize: none;
     width: 80%;
     height: 100px;
 }
 
-.countertosubmit {
+.countertosubmit, .counteredbysubmit, .itemforsubmit, .itemagainstsubmit {
     cursor: pointer;
     vertical-align: top;
 }
 
-.counteredbyname {
-    cursor: pointer;
-    vertical-align: top;
-}
-
-.counteredbyinfo {
-    resize: none;
-    width: 80%;
-    height: 100px;
-}
-
-.counteredbysubmit {
-    cursor: pointer;
-    vertical-align: top;
-}
-
-.upvote, .downvote {
+.counterupvote, .counterdownvote, .counteredupvote, .countereddownvote, .itemforupvote, .itemfordownvote, .itemagainstupvote, .itemagainstdownvote {
     background: none;
     padding: 0px;
     border: none;
   }
 
 .heroitems {
-    margin-top: 10px;
-    border-style: solid;
-    border-color: aqua;
-}
-
-.heroclips {
     margin-top: 10px;
     border-style: solid;
     border-color: aqua;
