@@ -14,6 +14,17 @@ app.config['MYSQL_USER'] = "root"
 app.config['MYSQL_PASSWORD'] = ""
 app.config['MYSQL_DB'] = "DotaBaseDB"
 
+
+# FUNCTION TO ADD ABILITY INFO
+def addabilityinfo(cur):
+    user = session['id']
+    abilityinfo = request.form
+    info = abilityinfo['abilityinfoinput']
+    id = abilityinfo['abilityid']
+    tag = abilityinfo['abilitytag']
+    cur.execute("INSERT INTO AbilityInfo(AbilityID, UserID, AbilityUserInfo, AbilityTag) VALUES(%s, %s, %s, %s)",(id, user, info, tag))
+    mysql.connection.commit()
+
 # FUNCTION TO ADD A COUNTER TO HERO PAGE
 def addcounterto(cur):
     user = session['id']
@@ -46,20 +57,20 @@ def countertoupvote(cur):
 
     if a is None:
         cur.execute("INSERT INTO CounterToVote(UserID, CounterID, CounterUpVote) VALUES(%s,%s,%s)",(user, counterid, vote))
-        cur.execute("UPDATE CountersTo SET CounterTotalUpVote = CounterTotalUpVote + 1 WHERE CounterID = %s",(counterid))
+        cur.execute("UPDATE CountersTo SET CounterTotalUpVote = CounterTotalUpVote + 1 WHERE CounterID = %s",(counterid,))
         mysql.connection.commit()
         return redirect(request.url)
     
     if a[1] == 1:
         cur.execute("DELETE FROM CounterToVote WHERE CounterID = %s AND UserID = %s",(counterid, user))
-        cur.execute("UPDATE CountersTo SET CounterTotalDownVote = CounterTotalDownVote - 1 WHERE CounterID = %s",(counterid))
+        cur.execute("UPDATE CountersTo SET CounterTotalDownVote = CounterTotalDownVote - 1 WHERE CounterID = %s",(counterid,))
         cur.execute("INSERT INTO CounterToVote(UserID, CounterID, CounterUpVote) VALUES(%s,%s,%s)",(user, counterid, vote))
-        cur.execute("UPDATE CountersTo SET CounterTotalUpVote = CounterTotalUpVote + 1 WHERE CounterID = %s",(counterid))
+        cur.execute("UPDATE CountersTo SET CounterTotalUpVote = CounterTotalUpVote + 1 WHERE CounterID = %s",(counterid,))
         mysql.connection.commit()
 
     else:
         cur.execute("DELETE FROM CounterToVote WHERE CounterID = %s AND UserID = %s",(counterid, user))
-        cur.execute("UPDATE CountersTo SET CounterTotalUpVote = CounterTotalUpVote - 1 WHERE CounterID = %s",(counterid))
+        cur.execute("UPDATE CountersTo SET CounterTotalUpVote = CounterTotalUpVote - 1 WHERE CounterID = %s",(counterid,))
         mysql.connection.commit()
 
 # FUNCTION TO DOWN VOTE ON THE COUNTER TO SECTION 
@@ -74,20 +85,20 @@ def countertodownvote(cur):
 
     if a is None:
         cur.execute("INSERT INTO CounterToVote(UserID, CounterID, CounterDownVote) VALUES(%s,%s,%s)",(user, counterid, vote))
-        cur.execute("UPDATE CountersTo SET CounterTotalDownVote = CounterTotalDownVote + 1 WHERE CounterID = %s",(counterid))
+        cur.execute("UPDATE CountersTo SET CounterTotalDownVote = CounterTotalDownVote + 1 WHERE CounterID = %s",(counterid,))
         mysql.connection.commit()
         return redirect(request.url)
 
     if a[0] == 1:
         cur.execute("DELETE FROM CounterToVote WHERE CounterID = %s AND UserID = %s",(counterid, user))
-        cur.execute("UPDATE CountersTo SET CounterTotalUpVote = CounterTotalUpVote - 1 WHERE CounterID = %s",(counterid))
+        cur.execute("UPDATE CountersTo SET CounterTotalUpVote = CounterTotalUpVote - 1 WHERE CounterID = %s",(counterid,))
         cur.execute("INSERT INTO CounterToVote(UserID, CounterID, CounterDownVote) VALUES(%s,%s,%s)",(user, counterid, vote))
-        cur.execute("UPDATE CountersTo SET CounterTotalDownVote = CounterTotalDownVote + 1 WHERE CounterID = %s",(counterid))
+        cur.execute("UPDATE CountersTo SET CounterTotalDownVote = CounterTotalDownVote + 1 WHERE CounterID = %s",(counterid,))
         mysql.connection.commit()
 
     else:
         cur.execute("DELETE FROM CounterToVote WHERE CounterID = %s AND UserID = %s",(counterid, user))
-        cur.execute("UPDATE CountersTo SET CounterTotalDownVote = CounterTotalDownVote - 1 WHERE CounterID = %s",(counterid))
+        cur.execute("UPDATE CountersTo SET CounterTotalDownVote = CounterTotalDownVote - 1 WHERE CounterID = %s",(counterid,))
         mysql.connection.commit()
 
 # FUNCTION TO RETURN TOTAL VOTES OF EACH COUNTER TO ENTRY 
@@ -108,20 +119,20 @@ def counteredbyupvote(cur):
 
     if a is None:
         cur.execute("INSERT INTO CounteredByVote(UserID, CounteredID, CounteredUpVote) VALUES(%s,%s,%s)",(user, counterid, vote))
-        cur.execute("UPDATE CounteredBy SET CounteredTotalUpVote = CounteredTotalUpVote + 1 WHERE CounteredID = %s",(counterid))
+        cur.execute("UPDATE CounteredBy SET CounteredTotalUpVote = CounteredTotalUpVote + 1 WHERE CounteredID = %s",(counterid,))
         mysql.connection.commit()
         return redirect(request.url)
     
     if a[1] == 1:
         cur.execute("DELETE FROM CounteredByVote WHERE CounteredID = %s AND UserID = %s",(counterid, user))
-        cur.execute("UPDATE CounteredBy SET CounteredByTotalDownVote = CounteredByTotalDownVote - 1 WHERE CounteredID = %s",(counterid))
+        cur.execute("UPDATE CounteredBy SET CounteredByTotalDownVote = CounteredByTotalDownVote - 1 WHERE CounteredID = %s",(counterid,))
         cur.execute("INSERT INTO CounteredByVote(UserID, CounteredID, CounteredUpVote) VALUES(%s,%s,%s)",(user, counterid, vote))
-        cur.execute("UPDATE CounteredBy SET CounteredByTotalUpVote = CounteredByTotalUpVote + 1 WHERE CounteredID = %s",(counterid))
+        cur.execute("UPDATE CounteredBy SET CounteredByTotalUpVote = CounteredByTotalUpVote + 1 WHERE CounteredID = %s",(counterid,))
         mysql.connection.commit()
 
     else:
         cur.execute("DELETE FROM CounteredByVote WHERE CounteredID = %s AND UserID = %s",(counterid, user))
-        cur.execute("UPDATE CounteredBy SET CounteredTotalUpVote = CounteredTotalUpVote - 1 WHERE CounteredID = %s",(counterid))
+        cur.execute("UPDATE CounteredBy SET CounteredTotalUpVote = CounteredTotalUpVote - 1 WHERE CounteredID = %s",(counterid,))
         mysql.connection.commit()
 
 # FUNCTION TO DOWN VOTE ON THE COUNTERED BY SECTION
@@ -136,20 +147,20 @@ def counteredbydownvote(cur):
 
     if a is None:
         cur.execute("INSERT INTO CounteredByVote(UserID, CounteredID, CounteredDownVote) VALUES(%s,%s,%s)",(user, counterid, vote))
-        cur.execute("UPDATE CounteredBy SET CounteredTotalDownVote = CounteredTotalDownVote + 1 WHERE CounteredID = %s",(counterid))
+        cur.execute("UPDATE CounteredBy SET CounteredTotalDownVote = CounteredTotalDownVote + 1 WHERE CounteredID = %s",(counterid,))
         mysql.connection.commit()
         return redirect(request.url)
 
     if a[0] == 1:
         cur.execute("DELETE FROM CounteredByVote WHERE CounteredID = %s AND UserID = %s",(counterid, user))
-        cur.execute("UPDATE CounteredBy SET CounteredTotalUpVote = CounteredTotalUpVote - 1 WHERE CounteredID = %s",(counterid))
+        cur.execute("UPDATE CounteredBy SET CounteredTotalUpVote = CounteredTotalUpVote - 1 WHERE CounteredID = %s",(counterid,))
         cur.execute("INSERT INTO CounteredByVote(UserID, CounteredID, CounteredDownVote) VALUES(%s,%s,%s)",(user, counterid, vote))
-        cur.execute("UPDATE CounteredBy SET CounteredTotalDownVote = CounteredTotalDownVote + 1 WHERE CounteredID = %s",(counterid))
+        cur.execute("UPDATE CounteredBy SET CounteredTotalDownVote = CounteredTotalDownVote + 1 WHERE CounteredID = %s",(counterid,))
         mysql.connection.commit()
 
     else:
         cur.execute("DELETE FROM CounteredByVote WHERE CounteredID = %s AND UserID = %s",(counterid, user))
-        cur.execute("UPDATE CounteredBy SET CounteredTotalDownVote = CounteredTotalDownVote - 1 WHERE CounteredID = %s",(counterid))
+        cur.execute("UPDATE CounteredBy SET CounteredTotalDownVote = CounteredTotalDownVote - 1 WHERE CounteredID = %s",(counterid,))
         mysql.connection.commit()
 
 # FUNCTION TO RETURN TOTAL VOTES OF EACH COUNTERED BY ENTRY
@@ -165,7 +176,8 @@ def additemfor(cur):
     name = itemforinfo['itemforname']
     info = itemforinfo['itemforinfo']
     tag = itemforinfo['itemfortag']
-    cur.execute("INSERT INTO HeroItemsFor(ItemID, HeroItemForUserInfo, UserID, ItemForTag) VALUES(%s, %s, %s, %s)",(name, info, user, tag))
+    hid = itemforinfo['itemforheroid']
+    cur.execute("INSERT INTO HeroItemsFor(ItemID, HeroItemForUserInfo, UserID, ItemForTag, HeroID) VALUES(%s, %s, %s, %s, %s)",(name, info, user, tag, hid))
     mysql.connection.commit()
 
 # FUNCTION TO ADD ITEM TO BUY AGAINST HERO TO HERO PAGE
@@ -175,7 +187,8 @@ def additemagainst(cur):
     name = itemagainstinfo['itemagainstname']
     info = itemagainstinfo['itemagainstinfo']
     tag = itemagainstinfo['itemagainsttag']
-    cur.execute("INSERT INTO HeroItemsAgainst(ItemID, HeroItemAgainstUserInfo, UserID, ItemAgainstTag) VALUES(%s, %s, %s, %s)",(name, info, user, tag))
+    hid = itemagainstinfo['itemagainstheroid']
+    cur.execute("INSERT INTO HeroItemsAgainst(ItemID, HeroItemAgainstUserInfo, UserID, ItemAgainstTag, HeroID) VALUES(%s, %s, %s, %s, %s)",(name, info, user, tag, hid))
     mysql.connection.commit()
 
 # FUNCTION TO UP VOTE ON THE ITEM FOR SECTION
@@ -190,20 +203,20 @@ def itemforupvote(cur):
 
     if a is None:
         cur.execute("INSERT INTO HeroItemsForVote(UserID, HeroItemForID, HeroItemForUpVote) VALUES(%s,%s,%s)",(user, itemforid, vote))
-        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalUpVote = HeroItemForTotalUpVote + 1 WHERE HeroItemForID = %s",(itemforid))
+        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalUpVote = HeroItemForTotalUpVote + 1 WHERE HeroItemForID = %s",(itemforid,))
         mysql.connection.commit()
         return redirect(request.url)
     
     if a[1] == 1:
         cur.execute("DELETE FROM HeroItemsForVote WHERE HeroItemForID = %s AND UserID = %s",(itemforid, user))
-        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalDownVote = HeroItemForTotalDownVote - 1 WHERE HeroItemForID = %s",(itemforid))
+        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalDownVote = HeroItemForTotalDownVote - 1 WHERE HeroItemForID = %s",(itemforid,))
         cur.execute("INSERT INTO HeroItemsForVote(UserID, HeroItemForID, HeroItemForUpVote) VALUES(%s,%s,%s)",(user, itemforid, vote))
-        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalUpVote = HeroItemForTotalUpVote + 1 WHERE HeroItemForID = %s",(itemforid))
+        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalUpVote = HeroItemForTotalUpVote + 1 WHERE HeroItemForID = %s",(itemforid,))
         mysql.connection.commit()
 
     else:
         cur.execute("DELETE FROM HeroItemsForVote WHERE HeroItemForID = %s AND UserID = %s",(itemforid, user))
-        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalUpVote = HeroItemForTotalUpVote - 1 WHERE HeroItemForID = %s",(itemforid))
+        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalUpVote = HeroItemForTotalUpVote - 1 WHERE HeroItemForID = %s",(itemforid,))
         mysql.connection.commit()
         
 # FUNCTION TO DOWN VOTE ON THE ITEM FOR SECTION
@@ -218,20 +231,20 @@ def itemfordownvote(cur):
 
     if a is None:
         cur.execute("INSERT INTO HeroItemsForVote(UserID, HeroItemForID, HeroItemForDownVote) VALUES(%s,%s,%s)",(user, itemforid, vote))
-        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalDownVote = HeroItemForTotalDownVote + 1 WHERE HeroItemForID = %s",(itemforid))
+        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalDownVote = HeroItemForTotalDownVote + 1 WHERE HeroItemForID = %s",(itemforid,))
         mysql.connection.commit()
         return redirect(request.url)
 
     if a[0] == 1:
         cur.execute("DELETE FROM HeroItemsForVote WHERE HeroItemForID = %s AND UserID = %s",(itemforid, user))
-        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalUpVote = HeroItemForTotalUpVote - 1 WHERE HeroItemForID = %s",(itemforid))
+        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalUpVote = HeroItemForTotalUpVote - 1 WHERE HeroItemForID = %s",(itemforid,))
         cur.execute("INSERT INTO HeroItemsForVote(UserID, HeroItemForID, HeroItemForDownVote) VALUES(%s,%s,%s)",(user, itemforid, vote))
-        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalDownVote = HeroItemForTotalDownVote + 1 WHERE HeroItemForID = %s",(itemforid))
+        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalDownVote = HeroItemForTotalDownVote + 1 WHERE HeroItemForID = %s",(itemforid,))
         mysql.connection.commit()
 
     else:
         cur.execute("DELETE FROM HeroItemsForVote WHERE HeroItemForID = %s AND UserID = %s",(itemforid, user))
-        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalDownVote = HeroItemForTotalDownVote - 1 WHERE HeroItemForID = %s",(itemforid))
+        cur.execute("UPDATE HeroItemsFor SET HeroItemForTotalDownVote = HeroItemForTotalDownVote - 1 WHERE HeroItemForID = %s",(itemforid,))
         mysql.connection.commit()
     
 # # FUNCTION TO UP VOTE ON THE ITEM AGAINST SECTION
@@ -246,20 +259,20 @@ def itemagainstupvote(cur):
 
     if a is None:
         cur.execute("INSERT INTO HeroItemsAgainstVote(UserID, HeroItemAgainstID, HeroItemAgainstUpVote) VALUES(%s,%s,%s)",(user, itemagainstid, vote))
-        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalUpVote = HeroItemAgainstTotalUpVote + 1 WHERE HeroItemAgainstID = %s",(itemagainstid))
+        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalUpVote = HeroItemAgainstTotalUpVote + 1 WHERE HeroItemAgainstID = %s",(itemagainstid,))
         mysql.connection.commit()
         return redirect(request.url)
     
     if a[1] == 1:
         cur.execute("DELETE FROM HeroItemsAgainstVote WHERE HeroItemAgainstID = %s AND UserID = %s",(itemagainstid, user))
-        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalDownVote = HeroItemAgainstTotalDownVote - 1 WHERE HeroItemAgainstID = %s",(itemagainstid))
+        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalDownVote = HeroItemAgainstTotalDownVote - 1 WHERE HeroItemAgainstID = %s",(itemagainstid,))
         cur.execute("INSERT INTO HeroItemsAgainstVote(UserID, HeroItemAgainstID, HeroItemAgainstUpVote) VALUES(%s,%s,%s)",(user, itemagainstid, vote))
-        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalUpVote = HeroItemAgainstTotalUpVote + 1 WHERE HeroItemAgainstID = %s",(itemagainstid))
+        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalUpVote = HeroItemAgainstTotalUpVote + 1 WHERE HeroItemAgainstID = %s",(itemagainstid,))
         mysql.connection.commit()
 
     else:
         cur.execute("DELETE FROM HeroItemsAgainstVote WHERE HeroItemAgainstID = %s AND UserID = %s",(itemagainstid, user))
-        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalUpVote = HeroItemAgainstTotalUpVote - 1 WHERE HeroItemAgainstID = %s",(itemagainstid))
+        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalUpVote = HeroItemAgainstTotalUpVote - 1 WHERE HeroItemAgainstID = %s",(itemagainstid,))
         mysql.connection.commit()
 
 # # FUNCTION TO DOWN VOTE ON THE ITEM AGAINST SECTION
@@ -274,20 +287,20 @@ def itemagainstdownvote(cur):
 
     if a is None:
         cur.execute("INSERT INTO HeroItemsAgainstVote(UserID, HeroItemAgainstID, HeroItemAgainstDownVote) VALUES(%s,%s,%s)",(user, itemagainstid, vote))
-        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalDownVote = HeroItemAgainstTotalDownVote + 1 WHERE HeroItemAgainstID = %s",(itemagainstid))
+        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalDownVote = HeroItemAgainstTotalDownVote + 1 WHERE HeroItemAgainstID = %s",(itemagainstid,))
         mysql.connection.commit()
         return redirect(request.url)
 
     if a[0] == 1:
         cur.execute("DELETE FROM HeroItemsAgainstVote WHERE HeroItemAgainstID = %s AND UserID = %s",(itemagainstid, user))
-        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalUpVote = HeroItemAgainstTotalUpVote - 1 WHERE HeroItemAgainstID = %s",(itemagainstid))
+        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalUpVote = HeroItemAgainstTotalUpVote - 1 WHERE HeroItemAgainstID = %s",(itemagainstid,))
         cur.execute("INSERT INTO HeroItemsAgainstVote(UserID, HeroItemAgainstID, HeroItemAgainstDownVote) VALUES(%s,%s,%s)",(user, itemagainstid, vote))
-        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalDownVote = HeroItemAgainstTotalDownVote + 1 WHERE HeroItemAgainstID = %s",(itemagainstid))
+        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalDownVote = HeroItemAgainstTotalDownVote + 1 WHERE HeroItemAgainstID = %s",(itemagainstid,))
         mysql.connection.commit()
 
     else:
         cur.execute("DELETE FROM HeroItemsAgainstVote WHERE HeroItemAgainstID = %s AND UserID = %s",(itemagainstid, user))
-        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalDownVote = HeroItemAgainstTotalDownVote - 1 WHERE HeroItemAgainstID = %s",(itemagainstid))
+        cur.execute("UPDATE HeroItemsAgainst SET HeroItemAgainstTotalDownVote = HeroItemAgainstTotalDownVote - 1 WHERE HeroItemAgainstID = %s",(itemagainstid,))
         mysql.connection.commit()
     
 # FUNCTION TO RETURN TOTAL VOTES ON ITEMS TO BUY FOR SECTION
@@ -299,6 +312,68 @@ def itemfortotalvotes(cur):
 # FUNCTION TO RETURN TOTAL VOTES ON ITEMS TO BUY AGAINST SECTION
 def itemagainsttotalvotes(cur):
     cur.execute("SELECT HeroItemAgainstTotalVotes, HeroItemAgainstID FROM HeroItemsAgainst")
+    votes = cur.fetchall()
+    return votes
+
+# FUNCTION TO UP VOTE NOTES ON ABILITIES
+def abilityupvote(cur):
+    user = session['id']
+    uservote = request.form
+    vote = uservote['bool']
+    abilityinfoid = uservote['abilityinfoid']
+
+    cur.execute('SELECT AbilityUpVote, AbilityDownVote FROM AbilityVote WHERE AbilityInfoID = %s AND UserID = %s',(abilityinfoid, user))
+    a = cur.fetchone()
+
+    if a is None:
+        cur.execute("INSERT INTO AbilityVote(UserID, AbilityInfoID, AbilityUpVote) VALUES(%s,%s,%s)",(user, abilityinfoid, vote))
+        cur.execute("UPDATE AbilityInfo SET AbilityTotalUpVote = AbilityTotalUpVote + 1 WHERE AbilityInfoID = %s",(abilityinfoid,))
+        mysql.connection.commit()
+        return redirect(request.url)
+    
+    if a[1] == 1:
+        cur.execute("DELETE FROM AbilityVote WHERE AbilityInfoID = %s AND UserID = %s",(abilityinfoid, user))
+        cur.execute("UPDATE AbilityInfo SET AbilityTotalDownVote = AbilityTotalDownVote - 1 WHERE AbilityInfoID = %s",(abilityinfoid,))
+        cur.execute("INSERT INTO AbilityVote(UserID, AbilityInfoID, AbilityUpVote) VALUES(%s,%s,%s)",(user, abilityinfoid, vote))
+        cur.execute("UPDATE AbilityInfo SET AbilityTotalUpVote = AbilityTotalUpVote + 1 WHERE AbilityInfoID = %s",(abilityinfoid,))
+        mysql.connection.commit()
+
+    else:
+        cur.execute("DELETE FROM AbilityVote WHERE AbilityInfoID = %s AND UserID = %s",(abilityinfoid, user))
+        cur.execute("UPDATE AbilityInfo SET AbilityTotalUpVote = AbilityTotalUpVote - 1 WHERE AbilityInfoID = %s",(abilityinfoid,))
+        mysql.connection.commit()
+
+# FUNCTION TO DOWN VOTE NOTES ON ABILITIES
+def abilitydownvote(cur):
+    user = session['id']
+    uservote = request.form
+    vote = uservote['bool']
+    abilityinfoid = uservote['abilityinfoid']
+
+    cur.execute('SELECT AbilityUpVote, AbilityDownVote FROM AbilityVote WHERE AbilityInfoID = %s AND UserID = %s',(abilityinfoid, user))
+    a = cur.fetchone()
+
+    if a is None:
+        cur.execute("INSERT INTO AbilityVote(UserID, AbilityInfoID, AbilityDownVote) VALUES(%s,%s,%s)",(user, abilityinfoid, vote))
+        cur.execute("UPDATE AbilityInfo SET AbilityTotalDownVote = AbilityTotalDownVote + 1 WHERE AbilityInfoID = %s",(abilityinfoid,))
+        mysql.connection.commit()
+        return redirect(request.url)
+
+    if a[0] == 1:
+        cur.execute("DELETE FROM AbilityVote WHERE AbilityInfoID = %s AND UserID = %s",(abilityinfoid, user))
+        cur.execute("UPDATE AbilityInfo SET AbilityTotalUpVote = AbilityTotalUpVote - 1 WHERE AbilityInfoID = %s",(abilityinfoid,))
+        cur.execute("INSERT INTO AbilityVote(UserID, AbilityInfoID, AbilityDownVote) VALUES(%s,%s,%s)",(user, abilityinfoid, vote))
+        cur.execute("UPDATE AbilityInfo SET AbilityTotalDownVote = AbilityTotalDownVote + 1 WHERE AbilityInfoID = %s",(abilityinfoid,))
+        mysql.connection.commit()
+
+    else:
+        cur.execute("DELETE FROM AbilityVote WHERE AbilityInfoID = %s AND UserID = %s",(abilityinfoid, user))
+        cur.execute("UPDATE AbilityInfo SET AbilityTotalDownVote = AbilityTotalDownVote - 1 WHERE AbilityInfoID = %s",(abilityinfoid,))
+        mysql.connection.commit()
+
+# FUNCTION TO RETURN TOTAL VOTES OF EACH COUNTERED BY ENTRY
+def abilitytotalvotes(cur):
+    cur.execute("SELECT AbilityTotalVotes, AbilityInfoID FROM AbilityInfo")
     votes = cur.fetchall()
     return votes
 
@@ -380,62 +455,148 @@ def items():
 def item(itemname):
   
     cur = mysql.connection.cursor()
-    cur.execute("SELECT ItemID, ItemName, ItemIconLink FROM Items")
+    cur.execute("SELECT ItemID, ItemName, ItemIconLink, ItemCost, ItemInfo, ItemAbilityName1, ItemAbilityInfo1, ItemAbilityName2, ItemAbilityInfo2, ItemAbilityName3, ItemAbilityInfo3 FROM Items")
     items = cur.fetchall()
-    cur.close()
 
+    itemid = None
     iname = None
     itemimgurl = None
-
+    itemcost = None
+    iteminfo = None
+    abilityname1 = None
+    abilityinfo1 = None
+    abilityname2 = None
+    abilityinfo2 = None
+    abilityname3 = None
+    abilityinfo3 = None
+    
     for i in items:
         if i[1] == itemname:
+            itemid = i[0]
             iname = i[1]
             itemimgurl = i[2]
-        
+            itemcost = i[3]
+            iteminfo = i[4]
+            abilityname1 = i[5]
+            abilityinfo1 = i[6]
+            abilityname2 = i[7]
+            abilityinfo2 = i[8]
+            abilityname3 = i[9]
+            abilityinfo3 = i[10]
+
+    iteminfo = iteminfo.split(',')
+
     iname = string.capwords(iname.replace('-',' '))
 
-    return render_template("item.html", iname=iname, imgurl=itemimgurl)
+    cur.execute("SELECT Heroes.HeroIconLink, HeroItemsFor.ItemID, HeroItemsFor.ItemForTag, HeroItemsFor.HeroItemForUserInfo, HeroItemsFor.HeroItemForTotalVotes FROM Heroes INNER JOIN HeroItemsFor ON HeroItemsFor.HeroID=Heroes.HeroID ORDER BY HeroItemForTotalVotes DESC")
+    itemsfor = cur.fetchall()
+
+    cur.execute("SELECT Heroes.HeroIconLink, HeroItemsAgainst.ItemID, HeroItemsAgainst.ItemAgainstTag, HeroItemsAgainst.HeroItemAgainstUserInfo, HeroItemsAgainst.HeroItemAgainstTotalVotes FROM Heroes INNER JOIN HeroItemsAgainst ON HeroItemsAgainst.HeroID=Heroes.HeroID ORDER BY HeroItemAgainstTotalVotes DESC")
+    itemsagainst = cur.fetchall()
+
+    cur.close()
+
+    return render_template("item.html",items=items, itemid=itemid, iname=iname, imgurl=itemimgurl, itemsfor=itemsfor, itemsagainst=itemsagainst, itemcost=itemcost, iteminfo=iteminfo, abilityname1=abilityname1, abilityname2=abilityname2, abilityname3=abilityname3, abilityinfo1=abilityinfo1, abilityinfo2=abilityinfo2, abilityinfo3=abilityinfo3)
 
 @app.route('/heroes/<heroname>', methods=['GET', 'POST'])
 def hero(heroname):
 
     cur = mysql.connection.cursor()
-    cur.execute("SELECT HeroID, HeroName, HeroIconLink FROM Heroes")
+    cur.execute("SELECT HeroID, HeroName, HeroIconLink, HeroAttribute, HeroStrength, HeroAgility, HeroIntelligence, HeroArmor, HeroAttack, MovementSpeed, HeroHealth, HeroMana, HeroAttackType, Complexity, HeroRole1, HeroRole2, HeroRole3, HeroRole4, HeroRole5, HeroRole6, HeroLane1, HeroLane2, HeroLane3, HeroLane4 FROM Heroes")
     heroes = cur.fetchall()
     
     hname = None
     heroimgurl = None
+    hid = None
+    heroattribute = None
+    strength = None
+    agility = None
+    intelligence = None
+    armor = None
+    attack = None
+    speed = None
+    health = None
+    mana = None
+    type = None
+    complexity = None
+    role1 = None
+    role2 = None
+    role3 = None
+    role4 = None
+    role5 = None
+    role6 = None
+    lane1 = None
+    lane2 = None
+    lane3 = None
+    lane4 = None
+
 
     for i in heroes:
         if i[1] == heroname:
+            hid = i[0]
             hname = i[1]
             heroimgurl = i[2]
+            heroattribute = i[3]
+            strength = i[4]
+            agility = i[5]
+            intelligence = i[6] 
+            armor = i[7]
+            attack = i[8]
+            speed = i[9]
+            health = i[10]
+            mana = i[11]
+            type = i[12]
+            complexity = i[13]
+            role1 = i[14]
+            role2 = i[15]
+            role3 = i[16]
+            role4 = i[17]
+            role5 = i[18]
+            role6 = i[19]         
+            lane1 = i[20]
+            lane2 = i[21]
+            lane3 = i[22]
+            lane4 = i[23]   
         
     hname = string.capwords(hname.replace('-',' '))
+
+    # FETCH ABILITIES
+    cur.execute("SELECT Heroes.HeroName, Abilities.HeroID, Abilities.AbilityName, Abilities.AbilityIconLink, Abilities.AbilityDesc, Abilities.AbilityAbility, Abilities.AbilityAffect, Abilities.AbilityDamage, Abilities.AbilityCooldown, Abilities.AbilityManaCost, Abilities.AbilityID FROM Heroes INNER JOIN Abilities ON Abilities.HeroID=Heroes.HeroID")
+    abilities = cur.fetchall()
+
+    # FETCH ABILITY USER INFO
+    cur.execute("SELECT AbilityID, UserID, AbilityUserInfo, AbilityTag, AbilityInfoID FROM AbilityInfo ORDER BY AbilityTotalVotes DESC")
+    fetchabilityuserinfo = cur.fetchall()
 
     # FETCH HERO INFO
     cur.execute("SELECT HeroID,HeroName FROM Heroes")
     fetchnames = cur.fetchall()
+
     # FETCH COUNTERS
-    cur.execute("SELECT Heroes.HeroIconLink, CountersTo.CounterUserInfo, Heroes.HeroName, CountersTo.CounterID, CountersTo.CounterTag FROM Heroes INNER JOIN CountersTo ON CountersTo.HeroID=Heroes.HeroID")
+    cur.execute("SELECT Heroes.HeroIconLink, CountersTo.CounterUserInfo, Heroes.HeroName, CountersTo.CounterID, CountersTo.CounterTag FROM Heroes INNER JOIN CountersTo ON CountersTo.HeroID=Heroes.HeroID ORDER BY CounterToTotalVotes DESC")
     fetchcounterto = cur.fetchall()
+
     # FETCH COUNTERED BY
-    cur.execute("SELECT Heroes.HeroIconLink, CounteredBy.CounteredUserInfo, Heroes.HeroName, CounteredBy.CounteredID, CounteredBy.CounteredTag FROM Heroes INNER JOIN CounteredBy ON CounteredBy.HeroID=Heroes.HeroID")
+    cur.execute("SELECT Heroes.HeroIconLink, CounteredBy.CounteredUserInfo, Heroes.HeroName, CounteredBy.CounteredID, CounteredBy.CounteredTag FROM Heroes INNER JOIN CounteredBy ON CounteredBy.HeroID=Heroes.HeroID ORDER BY CounteredByTotalVotes DESC")
     fetchcounteredby = cur.fetchall()
+
     # FETCH ITEMS INFO
     cur.execute("SELECT ItemID,ItemName FROM Items")
     fetchitems = cur.fetchall()
+
     # FETCH ITEMS FOR
-    cur.execute("SELECT Items.ItemIconLink, HeroItemsFor.HeroItemForUserInfo, Items.ItemName, HeroItemsFor.HeroItemForID, HeroItemsFor.ItemForTag FROM Items INNER JOIN HeroItemsFor ON HeroItemsFor.ItemID=Items.ItemID")
+    cur.execute("SELECT Items.ItemIconLink, HeroItemsFor.HeroItemForUserInfo, Items.ItemName, HeroItemsFor.HeroItemForID, HeroItemsFor.ItemForTag FROM Items INNER JOIN HeroItemsFor ON HeroItemsFor.ItemID=Items.ItemID ORDER BY HeroItemForTotalVotes DESC")
     fetchitemsfor = cur.fetchall()
+
     # FETCH ITEMS AGAINST
-    cur.execute("SELECT Items.ItemIconLink, HeroItemsAgainst.HeroItemAgainstUserInfo, Items.ItemName, HeroItemsAgainst.HeroItemAgainstID, HeroItemsAgainst.ItemAgainstTag FROM Items INNER JOIN HeroItemsAgainst ON HeroItemsAgainst.ItemID=Items.ItemID")
+    cur.execute("SELECT Items.ItemIconLink, HeroItemsAgainst.HeroItemAgainstUserInfo, Items.ItemName, HeroItemsAgainst.HeroItemAgainstID, HeroItemsAgainst.ItemAgainstTag FROM Items INNER JOIN HeroItemsAgainst ON HeroItemsAgainst.ItemID=Items.ItemID ORDER BY HeroItemAgainstTotalVotes DESC")
     fetchitemsagainst = cur.fetchall()
 
     fetchtotalcountervotes = countertototalvotes(cur)
     fetchtotalcounteredvotes = counteredbytotalvotes(cur)
     fetchtotalitemforvotes = itemfortotalvotes(cur)
     fetchtotalitemagainstvotes = itemagainsttotalvotes(cur)
+    abilityvotes = abilitytotalvotes(cur)
 
     if "countertosubmit" in request.form:
         addcounterto(cur)
@@ -473,9 +634,23 @@ def hero(heroname):
     if "itemagainstdownvote" in request.form:
         itemagainstdownvote(cur)
         return redirect(request.url)
+    if "abilityinfosubmit" in request.form:
+        addabilityinfo(cur)
+        return redirect(request.url)
+    if "abilityupvote" in request.form:
+        abilityupvote(cur)
+        return redirect(request.url)
+    if "abilitydownvote" in request.form:
+        abilitydownvote(cur)
+        return redirect(request.url)
+
+
+    cur.close()
    
     return render_template("hero.html", hname=hname, heroimgurl=heroimgurl, heroes=heroes, heronames=fetchnames, countertoinfo=fetchcounterto, counteredbyinfo=fetchcounteredby, countertotalvotes=fetchtotalcountervotes, 
-    counteredtotalvotes=fetchtotalcounteredvotes, items=fetchitems, itemsfor=fetchitemsfor, itemsagainst=fetchitemsagainst, itemforvotes=fetchtotalitemforvotes, itemagainstvotes=fetchtotalitemagainstvotes)
+    counteredtotalvotes=fetchtotalcounteredvotes, items=fetchitems, itemsfor=fetchitemsfor, itemsagainst=fetchitemsagainst, itemforvotes=fetchtotalitemforvotes, itemagainstvotes=fetchtotalitemagainstvotes, abilities=abilities, hid=hid,
+    heroattribute=heroattribute, strength=strength, agility=agility, intelligence=intelligence, role1=role1, role2=role2, role3=role3, role4=role4, role5=role5,role6=role6, armor=armor, attack=attack, speed=speed,
+    type=type, complexity=complexity,lane1=lane1, lane2=lane2, lane3=lane3, lane4=lane4, health=health, mana=mana, abilityuserinfo=fetchabilityuserinfo,abilityvotes=abilityvotes)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -12,122 +12,266 @@
     <title>{{hname}}</title>
 </head>
 <body>
+    <p hidden>{{hid}}</p>
     {% include 'navbar.html' %}
     <section class="section">
+        <h1 class="herotitle">{{hname}}</h1>
+    
         <div class="heroinfo">
-            <img src= "{{ url_for('static', filename=''+ heroimgurl ) }}"  alt="himg" class="himg">
-            <h1 class="herotitle">{{hname}}</h1>
+            <div class="heroimgcontainer">
+                <img src= "{{ url_for('static', filename=''+ heroimgurl ) }}"  alt="himg" class="himg">
+                <div class="healthandmana">
+                    <div title="Health" class="healthbar">{{health}}</div>
+                    <div title="Mana" class="manabar">{{mana}}</div>
+                </div>
+            </div>
+            <div class="attributescontainer">
+                <h2 class="attributestitle">Attributes:</h2>
+                <div class="attributes" title="Strength"><img class="attributeicons" src= "{{ url_for('static', filename='images/strength.png') }}">{{strength}}</div>
+                <div class="attributes" title="Agility"><img class="attributeicons" src= "{{ url_for('static', filename='images/agility.png') }}">{{agility}}</div>
+                <div class="attributes" title="Intelligence"><img class="attributeicons" src= "{{ url_for('static', filename='images/intelligence.png') }}">{{intelligence}}</div>
+            </div>
+            <div class="rolescontainer">
+                <h2 class="roles">Roles:</h2>
+                <p>{{role1.capitalize()}}</p>
+                <p>{{role2.capitalize()}}</p>
+                <p>{{role3.capitalize()}}</p>
+                <p>{{role4.capitalize()}}</p>
+                <p>{{role5.capitalize()}}</p>
+                <p>{{role6.capitalize()}}</p>
+            </div>
+            <div class="lanescontainer">
+                <h2 class="lanes">Lanes:</h2>
+                <p>{{lane1.capitalize().replace('-',' ')}}</p>
+                <p>{{lane2.capitalize().replace('-',' ')}}</p>
+                <p>{{lane3.capitalize().replace('-',' ')}}</p>
+                <p>{{lane4.capitalize().replace('-',' ')}}</p>
+            </div>
+            <div class="statscontainer">
+                <h2 class="stats">Stats:</h2>
+                <p>Armor: {{armor}}</p>
+                <p>Attack: {{attack}}</p>
+                <p>Movement Speed: {{speed}}</p>
+            </div>
+            <div class="extracontainer">
+                {% if heroattribute == 'strength' %}
+                    <div class="attricont"><img class="attribute" src= "{{ url_for('static', filename='images/strength.png') }}">Strength</div>
+                {% elif heroattribute =='agility' %}
+                    <div class="attricont"><img class="attribute" src= "{{ url_for('static', filename='images/agility.png') }}">Agility</div>
+                {% elif heroattribute == 'intelligence' %}
+                    <div class="attricont"><img class="attribute" src= "{{ url_for('static', filename='images/intelligence.png') }}">Intelligence</div>
+                {% endif %}
+                <p>Attack Type: {{type.capitalize()}}</p>
+                <p>Complexity: {{complexity.capitalize()}}</p>
+            </div>
         </div>
 
         <h2 class="abilitiestitle">Abilities</h2>
+        <i title="Click to hide section" onclick="hideabilities(this)" class="fa fa-eye"></i>
+        
         <div class="heroabilities">
+            {% for i in abilities %}
+                {% if i[1] == hid %}
+                <div class="abilities">
+                    <div class="abilitysection1">
+                        <h3 class="abilitytitle">{{i[2].capitalize().replace('-',' ')}}</h3>
+                        <div class="iconanddesc">
+                            <img class="abilityicon" src="{{ url_for('static', filename=''+ i[3] ) }}"> 
+                            <p class="abilitydescription">{{i[4]}}</p>
+                        </div>
+                        <div class="valuescontainer">             
+                            <div class="cooldowncontainer">
+                                <img title="Cooldown" class="cooldown" src="{{ url_for('static', filename='images/cooldown.png' ) }}">{{i[8]}}
+                            </div>
+                            <div title="Mana Cost" class="manacontainer">
+                                <div class="mana"></div>{{i[9]}}
+                            </div>
+                        </div> 
+                        <p>Ability: {{i[5]}}</p>
+                        <p>Affects: {{i[6]}}</p>
+                        <p>Damage: {{i[7]}}</p>
+                    </div>
+                    <div class="abilityinfocontiner">
+                        <div class="notesheader">
+                            <h3 class="notestitle">Notes:</h3>
+                            {% if session['username'] %}
+                                <i title="Add new entry" id="addability" onclick="addabilityinfo(this)" class="fa-solid fa-circle-plus"></i>
+                            {% endif %}
+                        </div>
+                        <div class="abilitycontainer">
+                            {% for j in abilityuserinfo %}
+                                {% if j[0] == i[10] %}
+                                    <div class="abilitynote">
+                                        <li class="abilityuserinfo">{{j[2]}}</li>
+                                        {% if session['username'] %}
+                                        <div class="voting">
+                                            <form method="POST" name="upvote" id="upvote">
+                                                <input type="hidden" id="bool" name="bool" value="1">
+                                                <input type="hidden" id="abilityinfoid" name="abilityinfoid" value="{{j[4]}}">
+                                                <button type="submit" value="Submit" class="abilityupvote" name="abilityupvote">
+                                                    <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
+                                                </button>
+                                            </form>
+                                            <form method="POST" name="downvote" id="downvote">
+                                                <input type="hidden" id="bool" name="bool" value="1">
+                                                <input type="hidden" id="abilityinfoid" name="abilityinfoid" value="{{j[4]}}">
+                                                <button type="submit" value="Submit" class="abilitydownvote" name="abilitydownvote">
+                                                    <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        {% endif %}   
+                                         <!-- POST VOTES -->
+                                        <div class="votes">
+                                            {% for k in abilityvotes %}
+                                                {% if k[1] == j[4] %}
+                                                    {% if k[0] <= 0 %}
+                                                        Vote
+                                                    {% else %}
+                                                        {{k[0]}}
+                                                    {% endif %}    
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %} 
+                        </div> 
+                        {% if session['username'] %}
+                            <div class="addabilityinfo" style="">
+                                <form method="POST" name="abilityinfoform_{{i[10]}}" id="abilityinfoform_{{i[10]}}">
+                                    <input type="hidden" id="abilitytag" name="abilitytag" value="{{hname}}">
+                                    <input type="hidden" id="abilityid" name="abilityid" value="{{i[10]}}">
+                                    <textarea name="abilityinfoinput" class="abilityinfoinput" form="abilityinfoform_{{i[10]}}">Enter text here...</textarea>
+                                    <input type="submit" value="Submit" class="abilityinfosubmit" name="abilityinfosubmit">
+                                </form> 
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}    
         </div>
 
         <h2 class="counterstitle">Counters</h2>
-        <i onclick="hidecounters(this)" class="fa fa-eye"></i>
+        <i title="Click to hide section" onclick="hidecounters(this)" class="fa fa-eye"></i>
         
         <!-- HERO COUNTERS X HERO SECTION -->
         <div class="herocounterto">
             {% if session['username'] %}
-                <i onclick="addcounter(this)" class="fa-solid fa-circle-plus"></i>
+                <i title="Add new entry" onclick="addcounter(this)" class="fa-solid fa-circle-plus"></i>
             {% endif %}
-            <h3 class="countertotitle">Counter To:</h3>
+        <h3 class="countertotitle">Counter To:</h3>
+            
+            <div class="countertocontainer">
                 {% for i in countertoinfo %}
                     {% if i[4] == hname %}
-                    <div class="counterinfoblock">
-                        <div class="countericons">
-                            <a href={{i[2]}}><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
-                        </div>
-                        <p class="countertext">{{i[1]}}</p>
-                        <!-- THUMBS UP AND DOWN VOTING FOR EACH POST -->
-                        {% if session['username'] %}
-                        <div class="voting">
-                            <form method="POST" name="upvote" id="upvote">
-                                <input type="hidden" id="bool" name="bool" value="1">
-                                <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
-                                <button type="submit" value="Submit" class="counterupvote" name="counterupvote">
-                                    <i class="fa-solid fa-thumbs-up"></i>
-                                </button>
-                            </form>
-                            <form method="POST" name="downvote" id="downvote">
-                                <input type="hidden" id="bool" name="bool" value="1">
-                                <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
-                                <button type="submit" value="Submit" class="counterdownvote" name="counterdownvote">
-                                    <i class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
-                                </button>
-                            </form>
-                        </div>
-                        {% endif %}
-                        
-                        <!-- POST VOTES -->
-                        <div class="votes">
-                            {% for j in countertotalvotes %}
-                                {% if j[1] == i[3]%}
-                                    {{j[0]}}
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-                {% if session['username'] %}
-                    <div class="addcounterto" style="display: none;">
-                        <form method="POST" name="addcountertoform" id="addcountertoform">
-                            <input type="hidden" id="countertag" name="countertag" value="{{hname}}">
-                            <SELECT class="countertoname" name="countertoname">
-                                {% for i in heronames %}
-                                    <option value={{i[0]}}>{{i[1]}}</option>
+                        <div class="counterinfoblock">
+                            <div class="countericons">
+                                <a href={{i[2]}}><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
+                            </div>
+                            <p class="countertext">{{i[1]}}</p>
+                            <!-- THUMBS UP AND DOWN VOTING FOR EACH POST -->
+                            {% if session['username'] %}
+                            <div class="voting">
+                                <form method="POST" name="upvote" id="upvote">
+                                    <input type="hidden" id="bool" name="bool" value="1">
+                                    <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
+                                    <button type="submit" value="Submit" class="counterupvote" name="counterupvote">
+                                        <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" name="downvote" id="downvote">
+                                    <input type="hidden" id="bool" name="bool" value="1">
+                                    <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
+                                    <button type="submit" value="Submit" class="counterdownvote" name="counterdownvote">
+                                        <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %} 
+                            <!-- POST VOTES -->
+                            <div class="votes">
+                                {% for j in countertotalvotes %}
+                                    {% if j[1] == i[3]%}
+                                        {% if j[0] <= 0 %}
+                                            Vote
+                                        {% else %}
+                                            {{j[0]}}
+                                        {% endif %}
+                                    {% endif %}
                                 {% endfor %}
-                            </SELECT>
-                            <textarea name="countertoinfo" class="countertoinfo" form="addcountertoform">Enter text here...</textarea>
-                            <input type="submit" value="Submit" class="countertosubmit" name="countertosubmit">
-                        </form> 
-                    </div>
-                {% endif %}
+                            </div>        
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
+            {% if session['username'] %}
+                <div class="addcounterto" style="display: none;">
+                    <form method="POST" name="addcountertoform" id="addcountertoform">
+                        <input type="hidden" id="countertag" name="countertag" value="{{hname}}">
+                        <SELECT class="countertoname" name="countertoname">
+                            {% for i in heronames %}
+                                <option value={{i[0]}}>{{i[1]}}</option>
+                            {% endfor %}
+                        </SELECT>
+                        <textarea name="countertoinfo" class="countertoinfo" form="addcountertoform">Enter text here...</textarea>
+                        <input type="submit" value="Submit" class="countertosubmit" name="countertosubmit">
+                    </form> 
+                </div>
+            {% endif %}
+        </div>
 
 
         <!-- HERO COUNTERED BY X HERO SECTION -->
+        
         <div class="herocounteredby">
             {% if session['username'] %}
-                <i onclick="addcounteredby(this)" class="fa-solid fa-circle-plus"></i>
+                <i title="Add new entry" onclick="addcounteredby(this)" class="fa-solid fa-circle-plus"></i>
             {% endif %}
-            <h3 class="counteredbytitle">Countered by:</h3>
-            {% for i in counteredbyinfo %}
-                {% if i[4] == hname %}
-                    <div class="counterinfoblock">
-                        <div class="countericons">
-                            <a href={{i[2]}}><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
+        <h3 class="counteredbytitle">Countered by:</h3>
+            
+            <div class="counteredbycontainer">
+                {% for i in counteredbyinfo %}
+                    {% if i[4] == hname %}
+                        <div class="counterinfoblock">
+                            <div class="countericons">
+                                <a href={{i[2]}}><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
+                            </div>
+                            <p class="countertext">{{i[1]}}</p>
+                            {% if session['username'] %}
+                            <div class="voting">
+                                <form method="POST" name="upvote" id="upvote">
+                                    <input type="hidden" id="bool" name="bool" value="1">
+                                    <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
+                                    <button type="submit" value="Submit" class="counteredupvote" name="counteredupvote">
+                                        <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" name="downvote" id="downvote">
+                                    <input type="hidden" id="bool" name="bool" value="1">
+                                    <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
+                                    <button type="submit" value="Submit" class="countereddownvote" name="countereddownvote">
+                                        <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                            <div class="votes">
+                                {% for j in counteredtotalvotes %}
+                                    {% if j[1] == i[3]%}
+                                        {% if j[0] <= 0 %}
+                                            Vote
+                                        {% else %}
+                                            {{j[0]}}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
-                        <p class="countertext">{{i[1]}}</p>
-                        {% if session['username'] %}
-                        <div class="voting">
-                            <form method="POST" name="upvote" id="upvote">
-                                <input type="hidden" id="bool" name="bool" value="1">
-                                <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
-                                <button type="submit" value="Submit" class="counteredupvote" name="counteredupvote">
-                                    <i class="fa-solid fa-thumbs-up"></i>
-                                </button>
-                            </form>
-                            <form method="POST" name="downvote" id="downvote">
-                                <input type="hidden" id="bool" name="bool" value="1">
-                                <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
-                                <button type="submit" value="Submit" class="countereddownvote" name="countereddownvote">
-                                    <i class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
-                                </button>
-                            </form>
-                        </div>
-                        {% endif %}
-                        <div class="votes">
-                            {% for j in counteredtotalvotes %}
-                                {% if j[1] == i[3]%}
-                                    {{j[0]}}
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
             {% if session['username'] %}
                 <div class="addcounteredby" style="display: none;">
                     <form method="POST" name="addcounteredbyform" id="addcounteredbyform">
@@ -147,51 +291,59 @@
 
         <!-- ITEMS FOR HERO TO BUY -->
         <h2 class="itemstitle">Items</h2>
-        <i onclick="hideitems(this)" class="fa fa-eye"></i>
-        <div class="heroitemsfor">
+        <i title="Click to hide section" onclick="hideitems(this)" class="fa fa-eye"></i>
+        <div class="itemsforcontainer">
             {% if session['username'] %}
-                <i onclick="additemfor(this)" class="fa-solid fa-circle-plus"></i>
+                <i title="Add new entry" onclick="additemfor(this)" class="fa-solid fa-circle-plus"></i>
             {% endif %}
             <h3 class="itemfortitle">Items to buy for:</h3>
-            {% for i in itemsfor %}
-                {% if i[4] == hname %}
-                    <div class="itemsinfoblock">
-                        <div class="itemsicons">
-                            <a href={{i[2]}}><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
-                        </div>
-                        <p class="itemsfortext">{{i[1]}}</p>
-                        {% if session['username'] %}
-                            <div class="voting">
-                                <form method="POST" name="upvote" id="upvote">
-                                    <input type="hidden" id="bool" name="bool" value="1">
-                                    <input type="hidden" id="itemforid" name="itemforid" value="{{i[3]}}">
-                                    <button type="submit" value="Submit" class="itemforupvote" name="itemforupvote">
-                                        <i class="fa-solid fa-thumbs-up"></i>
-                                    </button>
-                                </form>
-                                <form method="POST" name="downvote" id="downvote">
-                                    <input type="hidden" id="bool" name="bool" value="1">
-                                    <input type="hidden" id="itemforid" name="itemforid" value="{{i[3]}}">
-                                    <button type="submit" value="Submit" class="itemfordownvote" name="itemfordownvote">
-                                        <i class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
-                                    </button>
-                                </form>
+            <div class="heroitemsfor">
+                
+                {% for i in itemsfor %}
+                    {% if i[4] == hname %}
+                        <div class="itemsinfoblock">
+                            <div class="itemsicons">
+                                <a href="/items/{{i[2]}}"><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
                             </div>
-                        {% endif %}
-                        <div class="votes">
-                            {% for j in itemforvotes %}
-                                {% if j[1] == i[3]%}
-                                    {{j[0]}}
-                                {% endif %}
-                            {% endfor %}
+                            <p class="itemsfortext">{{i[1]}}</p>
+                            {% if session['username'] %}
+                                <div class="voting">
+                                    <form method="POST" name="upvote" id="upvote">
+                                        <input type="hidden" id="bool" name="bool" value="1">
+                                        <input type="hidden" id="itemforid" name="itemforid" value="{{i[3]}}">
+                                        <button type="submit" value="Submit" class="itemforupvote" name="itemforupvote">
+                                            <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
+                                        </button>
+                                    </form>
+                                    <form method="POST" name="downvote" id="downvote">
+                                        <input type="hidden" id="bool" name="bool" value="1">
+                                        <input type="hidden" id="itemforid" name="itemforid" value="{{i[3]}}">
+                                        <button type="submit" value="Submit" class="itemfordownvote" name="itemfordownvote">
+                                            <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                            <div class="votes">
+                                {% for j in itemforvotes %}
+                                    {% if j[1] == i[3]%}
+                                        {% if j[0] <= 0 %}
+                                            Vote
+                                        {% else %}
+                                            {{j[0]}}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
             {% if session['username'] %}
                 <div class="additemforinfo" style="display: none;">
                     <form method="POST" name="additemforinfoform" id="additemforinfoform">
                         <input type="hidden" id="itemfortag" name="itemfortag" value="{{hname}}">
+                        <input type="hidden" id="itemforheroid" name="itemforheroid" value="{{hid}}">
                         <SELECT class="itemforname" name="itemforname">
                             {% for i in items %}
                                 <option value={{i[0]}}>{{i[1]}}</option>
@@ -206,50 +358,58 @@
 
 
         <!-- ITEMS HEROES SHOULD BUY AGAINST THIS HERO -->
-        <div class="heroitemsagainst">
+        
+        <div class="itemsagainstcontainer">
             {% if session['username'] %}
-                <i onclick="additemagainst(this)" class="fa-solid fa-circle-plus"></i>
+                <i title="Add new entry" onclick="additemagainst(this)" class="fa-solid fa-circle-plus"></i>
             {% endif %}
             <h3 class="itemagainsttitle">Items to Against:</h3>
-            {% for i in itemsagainst %}
-                {% if i[4] == hname %}
-                    <div class="itemsinfoblock">
-                        <div class="itemsicons">
-                            <a href={{i[2]}}><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
-                        </div>
-                        <p class="itemsagainsttext">{{i[1]}}</p>
-                        {% if session['username'] %}
-                            <div class="voting">
-                                <form method="POST" name="upvote" id="upvote">
-                                    <input type="hidden" id="bool" name="bool" value="1">
-                                    <input type="hidden" id="itemagainstid" name="itemagainstid" value="{{i[3]}}">
-                                    <button type="submit" value="Submit" class="itemagainstupvote" name="itemagainstupvote">
-                                        <i class="fa-solid fa-thumbs-up"></i>
-                                    </button>
-                                </form>
-                                <form method="POST" name="downvote" id="downvote">
-                                    <input type="hidden" id="bool" name="bool" value="1">
-                                    <input type="hidden" id="itemagainstid" name="itemagainstid" value="{{i[3]}}">
-                                    <button type="submit" value="Submit" class="itemagainstdownvote" name="itemagainstdownvote">
-                                        <i class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
-                                    </button>
-                                </form>
+            <div class="heroitemsagainst">
+                {% for i in itemsagainst %}
+                    {% if i[4] == hname %}
+                        <div class="itemsinfoblock">
+                            <div class="itemsicons">
+                                <a href="/items/{{i[2]}}"><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
                             </div>
-                        {% endif %}
-                        <div class="votes">
-                            {% for j in itemagainstvotes %}
-                                {% if j[1] == i[3]%}
-                                    {{j[0]}}
-                                {% endif %}
-                            {% endfor %}
+                            <p class="itemsagainsttext">{{i[1]}}</p>
+                            {% if session['username'] %}
+                                <div class="voting">
+                                    <form method="POST" name="upvote" id="upvote">
+                                        <input type="hidden" id="bool" name="bool" value="1">
+                                        <input type="hidden" id="itemagainstid" name="itemagainstid" value="{{i[3]}}">
+                                        <button type="submit" value="Submit" class="itemagainstupvote" name="itemagainstupvote">
+                                            <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
+                                        </button>
+                                    </form>
+                                    <form method="POST" name="downvote" id="downvote">
+                                        <input type="hidden" id="bool" name="bool" value="1">
+                                        <input type="hidden" id="itemagainstid" name="itemagainstid" value="{{i[3]}}">
+                                        <button type="submit" value="Submit" class="itemagainstdownvote" name="itemagainstdownvote">
+                                            <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                            <div class="votes">
+                                {% for j in itemagainstvotes %}
+                                    {% if j[1] == i[3]%}
+                                        {% if j[0] <= 0 %}
+                                            Vote
+                                        {% else %}
+                                            {{j[0]}}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
             {% if session['username'] %}
                 <div class="additemagainstinfo" style="display: none;">
                     <form method="POST" name="additemagainstinfoform" id="additemagainstinfoform">
                         <input type="hidden" id="itemagainsttag" name="itemagainsttag" value="{{hname}}">
+                        <input type="hidden" id="itemagainstheroid" name="itemagainstheroid" value="{{hid}}">
                         <SELECT class="itemagainstname" name="itemagainstname">
                             {% for i in items %}
                                 <option value={{i[0]}}>{{i[1]}}</option>

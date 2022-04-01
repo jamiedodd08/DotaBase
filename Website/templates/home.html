@@ -7,29 +7,46 @@
     <link rel="icon" type="image/x-icon" href="static/images/logo4.png">
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
+    <script src="https://kit.fontawesome.com/46aee2db62.js" crossorigin="anonymous"></script>
     <title>DotaBase</title>
 </head>
 <body>
     {% include 'navbar.html' %}
     <section class="section">
+
             <img src="static/images/visage.jpg" alt="homeimg" class="homeimg">
+
+            <header class="homeheader">
+                <p>Welcome to DotaBase, a new crowdsourced knowledge base for Dota 2.</p>
+                <p>Please login or create a new account to add new entries and up/down vote posts.</p>
+            </header>
+
+            <h2 class="homeh2">Featured Contributors</h2>
             <div class="fcont">
-                <aside>
-                    <h1 class="homeh1">Featured Contributors</h1>
-                    <img src="static/images/heroes/abaddon.png" alt="homeimg" class="homeimg">
-                </aside>
+                <div class="featureduser"><i class="fa-solid fa-circle-user"></i>Placeholder</div>
+                <div class="featureduser"><i class="fa-solid fa-circle-user"></i>Placeholder</div>
+                <div class="featureduser"><i class="fa-solid fa-circle-user"></i>Placeholder</div>
+                <div class="featureduser"><i class="fa-solid fa-circle-user"></i>Placeholder</div>
+                <div class="featureduser"><i class="fa-solid fa-circle-user"></i>Placeholder</div>
+                <div class="featureduser"><i class="fa-solid fa-circle-user"></i>Placeholder</div>
             </div>
+
+            <h2 class="homeh2">Featured Heroes</h2>
             <div class="fheroes">
-                <article>
-                    <h2 class="homeh2">Featured Heroes</h2>
-                    <img src="static/images/heroes/abaddon.png" alt="homeimg" class="homeimg">
-                </article>
+                <div class="fheroimg"><a href="/heroes/omniknight"><img src="static/images/heroes/omniknight/omniknight.png" alt="homeimg" class="homeimg"></a></div>
+                <div class="fheroimg"><a href="/heroes/abaddon"><img src="static/images/heroes/abaddon/abaddon.png" alt="homeimg" class="homeimg"></a></div>
+                <div class="fheroimg"><a href="/heroes/necrophos"><img src="static/images/heroes/necrophos/necrophos.png" alt="homeimg" class="homeimg"></a></div>
+                <div class="fheroimg"><a href="/heroes/zeus"><img src="static/images/heroes/zeus/zeus.png" alt="homeimg" class="homeimg"></a></div>
+                <div class="fheroimg"><a href="/heroes/spectre"><img src="static/images/heroes/spectre/spectre.png" alt="homeimg" class="homeimg"></a></div>
             </div>
+
+            <h2 class="homeh2">Most Popular Heroes</h2>
             <div class="pheroes">
-                <article>
-                    <h3 class="homeh3">Most Popular Heroes</h3>
-                    <img src="static/images/heroes/abaddon.png" alt="homeimg" class="homeimg">
-                </article>
+                <div class="pheroimg"><a href="/heroes/pudge"><img src="static/images/heroes/pudge/pudge.png" alt="homeimg" class="homeimg"></a></div>
+                <div class="pheroimg"><a href="/heroes/phantom-assassin"><img src="static/images/heroes/phantom_assassin/phantom_assassin.png" alt="homeimg" class="homeimg"></a></div>
+                <div class="pheroimg"><a href="/heroes/sniper"><img src="static/images/heroes/sniper/sniper.png" alt="homeimg" class="homeimg"></a></div>
+                <div class="pheroimg"><a href="/heroes/invoker"><img src="static/images/heroes/invoker/invoker.png" alt="homeimg" class="homeimg"></a></div>
+                <div class="pheroimg"><a href="/heroes/juggernaut"><img src="static/images/heroes/juggernaut/juggernaut.png" alt="homeimg" class="homeimg"></a></div>
             </div>
     </section>
     <footer>

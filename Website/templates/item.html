@@ -10,14 +10,90 @@
     <title>{{iname}}</title>
 </head>
 <body>
+    <p hidden>{{itemid}}</p>
     {% include 'navbar.html' %}
     <section class="section">
-        <div class="iteminfo">
-            <img src = "{{ url_for('static', filename=''+ imgurl ) }}" alt="itemimg" class="itemimg">
+        <div class="itemcontainer">
             <h1 class="itemtitle">{{iname}}</h1>
+            <div class="iteminfo">
+                <div>
+                    <img src = "{{ url_for('static', filename=''+ imgurl ) }}" alt="itemimg" class="itemimg">
+                    <div class="itemcost">
+                        <div><img title="Item Cost" src = "{{ url_for('static', filename='images/gold.png') }}"></div>
+                        <div>{{itemcost}}</div>
+                    </div>
+                </div>
+                <div class="infocontainer">
+                    <h2>Information:</h2>
+                    <div class="itemtxt">
+                        {%for i in iteminfo%}
+                            <p>{{i}}</p>
+                        {%endfor%}
+                    </div>
+                </div>
+                <div class="titleanditemabilities">
+                    <h2 class="itemabilitiestitle">Abilities:</h2>
+                    <div class="itemabilitycontainter">
+                        <div class="itemability">
+                            <p style="font-weight: bold;">{{abilityname1}}</p>
+                            <p>{{abilityinfo1}}</p>
+                        </div>
+                        <div class="itemability">
+                            <p style="font-weight: bold;">{{abilityname2}}</p>
+                            <p>{{abilityinfo2}}</p>
+                        </div>
+                        <div class="itemability">
+                            <p style="font-weight: bold;">{{abilityname3}}</p>
+                            <p>{{abilityinfo3}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="itemnotescontainer">
+                <h2>Notes:</h2>
+            </div>
         </div>
-        <h3 class="itembuyfortitle">Reccomended to buy for:</h3>
-        <h3 class="itembuyagainsttitle">Reccomended to buy against:</h3>
+        
+        <h3 class="itemrecfortitle">Reccomended to buy for:</h3>
+        <div class="itemrecfor">
+            {% for i in itemsfor %}
+                {% if i[1] == itemid %}
+                    <div class="itemrecforblock">
+                        <div class="herorecimg">
+                            <a href="/heroes/{{i[2].lower().replace(' ','-')}}"><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
+                        </div>
+                        <div class="itemrecforinfo">
+                            {{i[3]}}
+                        </div>
+                        <div class="itemrecforvotes">
+                            {{i[4]}}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <h3 class="itemrecagainsttitle">Reccomended to buy against:</h3>
+        <div class="itemrecagainst">
+            {% for i in itemsagainst %}
+                {% if i[1] == itemid %}
+                    <div class="itemrecagainstblock">
+                        <div class="herorecimg">
+                            <img src="{{ url_for('static', filename=''+ i[0] ) }}">
+                        </div>
+                        <div class="itemrecagainstinfo">
+                            {{i[3]}}
+                        </div>
+                        <div class="itemrecagainstvotes">
+                            {{i[4]}}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+            
+                
+           
+
     </section>
     <footer>
     <p>Footer</p>

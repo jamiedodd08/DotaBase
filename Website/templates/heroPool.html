@@ -6,14 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="static/images/logo4.png">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/dropdown.js') }}"></script>
     <title>Heroes</title>
 </head>
 <body>
     {% include 'navbar.html' %}
     <section class="section">  
         <section class="gridheader">
-            
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">Sort By Type:</button>
+                <div id="myDropdown" class="dropdown-content">
+                  <a href="heroes/strength">Strength</a>
+                  <a href="heroes/agility">Agility</a>
+                  <a href="heroes/intelligence">Intelligence</a>
+                </div>
+              </div>
         </section>
+        
         <div class="imggrid">
             <div class="container">
                 <a href="/heroes/abaddon"><img src="static/images/heroes/abaddon/abaddon.png" alt="gridimg" class="gridimg"></a>

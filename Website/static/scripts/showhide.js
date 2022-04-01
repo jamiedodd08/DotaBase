@@ -14,8 +14,8 @@ function hidecounters(x) {
   }
 
 function hideitems(x) {
-    var g = document.querySelector('.heroitemsfor');
-    var j = document.querySelector('.heroitemsagainst');
+    var g = document.querySelector('.itemsforcontainer');
+    var j = document.querySelector('.itemsagainstcontainer');
     x.classList.toggle("fa-eye-slash");
     if(g.style.display === "none") {
         g.style.display = "block";
@@ -28,4 +28,13 @@ function hideitems(x) {
     }
   }
 
-
+function hideabilities(x) {
+    var g = document.querySelector('.heroabilities');
+    x.classList.toggle("fa-eye-slash");
+    if(g.style.display === "none") {
+        g.style.display = "block";
+    }
+    else {
+        g.style.display = "none";
+    }
+}
