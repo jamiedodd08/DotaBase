@@ -42,7 +42,6 @@ function additemagainst(x) {
     }
   }
 
-
 // function addabilityinfo(x) {
 //     var g = document.querySelector('.addabilityinfo');
 //     if(g.style.display === "none") {

@@ -6,13 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo4.png' ) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
-    <link rel="icon" type="image/x-icon" href="static/images/logo4.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/showhide.js') }}"></script>
+    <script src="https://kit.fontawesome.com/46aee2db62.js" crossorigin="anonymous"></script>
     <title>{{iname}}</title>
 </head>
 <body>
     <p hidden>{{itemid}}</p>
+    <p hidden class="userid">{{session['id']}}</p>
     {% include 'navbar.html' %}
     <section class="section">
+
+        {% with messages = get_flashed_messages() %}  
+        {% if messages %}  
+        <div class="flashmsg">
+            {% for message in messages %}  
+                    <p>{{ message }}</p>  
+                    <button class="closeicon">
+                        <i class="fa-solid fa-square-xmark closebtn"></i>
+                    </button>
+            {% endfor %}  
+        {% endif %}  
+        </div>
+        {% endwith %}  
+
         <div class="itemcontainer">
             <h1 class="itemtitle">{{iname}}</h1>
             <div class="iteminfo">
@@ -23,34 +40,118 @@
                         <div>{{itemcost}}</div>
                     </div>
                 </div>
+                
                 <div class="infocontainer">
-                    <h2>Information:</h2>
+                    <h2 class="infotitle">Information:</h2>
                     <div class="itemtxt">
                         {%for i in iteminfo%}
                             <p>{{i}}</p>
                         {%endfor%}
                     </div>
                 </div>
+                
                 <div class="titleanditemabilities">
                     <h2 class="itemabilitiestitle">Abilities:</h2>
                     <div class="itemabilitycontainter">
-                        <div class="itemability">
-                            <p style="font-weight: bold;">{{abilityname1}}</p>
-                            <p>{{abilityinfo1}}</p>
+                        <div class="itemability itemability1">
+                            <div class="itemabilitytxt">
+                                <p style="font-weight: bold;">{{abilityname1}}</p>
+                                <p>{{abilityinfo1}}</p>
+                            </div>
                         </div>
                         <div class="itemability">
-                            <p style="font-weight: bold;">{{abilityname2}}</p>
-                            <p>{{abilityinfo2}}</p>
+                            <div class="itemabilitytxt">
+                                <p style="font-weight: bold;">{{abilityname2}}</p>
+                                <p>{{abilityinfo2}}</p>
+                            </div>
                         </div>
                         <div class="itemability">
-                            <p style="font-weight: bold;">{{abilityname3}}</p>
-                            <p>{{abilityinfo3}}</p>
+                            <div class="itemabilitytxt">
+                                <p style="font-weight: bold;">{{abilityname3}}</p>
+                                <p>{{abilityinfo3}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="itemnotescontainer">
+                
+                <i title="Add new entry" class="fa-solid fa-circle-plus addinfo addabilitybutton"></i>
+                
                 <h2>Notes:</h2>
+                {% for i in itemuserinfo %}
+                    {% if i[0] == itemid %}
+                        <div class="notescontainer">
+                            <li class="itemusernote">
+                                {{i[2]}}
+                            </li>
+
+                            {% for vote in votes %}
+                                {% if vote[0] == session['id'] and vote[1] == i[4] and vote[2] == 1 %}
+                                    <p hidden class="userupvote">{{vote[2]}}</p>
+                                {% elif vote[0] == session['id'] and vote[1] == i[4] and vote[3] == 1 %}
+                                    <p hidden class="userdownvote">{{vote[3]}}</p>
+                                {% endif %}
+                            {% endfor %}
+                           
+                            <div class="voting">
+                                <form method="POST" name="upvote" id="upvote">
+                                    <input type="hidden" id="bool" name="bool" value="1">
+                                    <input type="hidden" id="iteminfoid" name="iteminfoid" value="{{i[4]}}">
+                                    <button type="submit" value="Submit" class="itemupvote vote" name="itemupvote">
+                                        <i title="Upvote" class="fa-solid fa-thumbs-up upvoteicon"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" name="downvote" id="downvote">
+                                    <input type="hidden" id="bool" name="bool" value="1">
+                                    <input type="hidden" id="iteminfoid" name="iteminfoid" value="{{i[4]}}">
+                                    <button type="submit" value="Submit" class="itemdownvote vote" name="itemdownvote">
+                                        <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                                    </button>
+                                </form>
+                            </div>
+                                
+                            <div class="votes">
+                                {% for k in itemnotevotes %}
+                                {% if k[1] == i[4] %}
+                                    {% if k[0] <= 0 %}
+                                        Vote
+                                    {% else %}
+                                        {{k[0]}}
+                                    {% endif %}    
+                                {% endif %}
+                            {% endfor %}
+                            </div>
+                            {% if i[1] == session['id'] %}
+                                <button id="opendeleteform" class="opendeleteform" name="opendeleteform"> 
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <div class="formpopup" id="deletepopup">
+                                    <form method="POST" class="formcontainer" name="deletepost" id="deletepost">
+                                        <input type="hidden" id="iteminfoid" name="iteminfoid" value="{{i[4]}}">
+                                        <input type="hidden" id="userid" name="userid" value="{{session['id']}}">
+                                        <!-- <button type="submit" value="submit" class="deletebutton" name="deletebutton"> 
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button> -->
+                                        <button type="submit" class="btn confirm" name="deletebutton">Confirm deletion</button>
+                                        <button type="button" class="btn cancel">Close</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {% if session['username'] %}
+                    <div class="additemnote formcontainer" style="display: none;">
+                        <form method="POST" name="iteminfoform" id="iteminfoform">
+                            <input type="hidden" id="itemtag" name="itemtag" value="{{iname}}">
+                            <input type="hidden" id="itemid" name="itemid" value="{{itemid}}">
+                            <textarea name="iteminfoinput" class="iteminfoinput" form="iteminfoform">Enter text here...</textarea>
+                            <input type="submit" value="Submit" class="iteminfosubmit" name="iteminfosubmit">
+                        </form> 
+                    </div>
+                {% endif %}
             </div>
         </div>
         
@@ -96,7 +197,7 @@
 
     </section>
     <footer>
-    <p>Footer</p>
+    <p>DotaBase</p>
     </footer>
 </body>
 </html>

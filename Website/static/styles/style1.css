@@ -17,11 +17,32 @@ body {
     padding: 10px 10px;
     background-color: rgb(11, 12, 16);
     max-width: 80%;
-    height: auto;
+    min-height: 500px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
+}
+
+.flashmsg{
+    display: flex;
+    gap: 10px;
+    background-color: rgb(31, 40, 51);
+    padding: 5px;
+    justify-content: center;
+}
+
+.closebtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.closeicon {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 18px;
 }
 
 .homeheader {
@@ -83,7 +104,8 @@ footer {
 
 /* hero pool grid */
 .gridheader {
-    
+    display: flex;   
+    gap: 10px;
 }
 
 .imggrid {
@@ -91,6 +113,7 @@ footer {
     justify-content: center;
     align-items: center;
     grid-template-columns: repeat(auto-fit, minmax(293px,200px));
+    grid-template-columns: repeat(auto-fit, minmax(min(293px,100%), 1fr));
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
@@ -206,7 +229,7 @@ footer {
     display: grid;
     justify-content: left;
     align-items: left;
-    grid-template-columns: repeat(auto-fit, minmax(150px,100px));
+    grid-template-columns: repeat(auto-fit, minmax(100px,100px));
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: auto;
@@ -269,20 +292,19 @@ footer {
 .itemabilitycontainter{
     display: flex;
     gap: 10px;
+   
 }
 
 .itemability {
     width: 300px;
-    border-right: solid;
-    
 }
 
 .infocontainer {
     border-right: solid;
 }
 
-.itemtxt {
-    margin-right: 20px;
+.infotitle {
+    margin-right: 70px;
 }
 
 .itemcost{
@@ -293,6 +315,16 @@ footer {
 .itemnotescontainer{
     margin-top: 10px;
     height: 300px;
+}
+
+.notescontainer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.itemusernote {
+    width: 90%;
 }
 
 .heroinfo {
@@ -371,6 +403,7 @@ footer {
 @media (max-width: 1600px) {
     .heroinfo {
       flex-direction: column;
+      justify-content: center;
     }
     .heroimgcontainer {
         max-width: 500px;
@@ -378,6 +411,11 @@ footer {
     .attributescontainer, .rolescontainer, .lanescontainer, .statscontainer, .extracontainer {
         border-right: none;
         border-bottom: solid;
+    }
+
+    .abilities{
+        flex-direction: column;
+        height: 600px;
     }
 
   }
@@ -398,6 +436,7 @@ footer {
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
+    align-items: center;
 }
 
 .notesheader {
@@ -479,9 +518,10 @@ footer {
 
 .abilityinfocontiner {
     width: 100%;
+    
 }
 
-.countertocontainer, .counteredbycontainer, .heroitemsfor, .heroitemsagainst, .itembuyfortitle, .itembuyagainsttitle, .itemrecfor, .itemrecagainst, .abilityinfocontiner {
+.countertocontainer, .counteredbycontainer, .heroitemsfor, .heroitemsagainst, .itembuyfortitle, .itembuyagainsttitle, .itemrecfor, .itemrecagainst, .abilityinfocontiner, .itemnotescontainer {
     margin-top: 10px;
     position: relative;
     overflow-y: auto;
@@ -499,6 +539,7 @@ footer {
     gap: 10px;
     margin-top: 15px;
     margin-bottom: 15px;
+    align-items: center;
 }
 
 .countertext {
@@ -526,12 +567,17 @@ footer {
     transition: 0.4s;
 }
 
-.fa-circle-plus {
+.addabilitybutton {
     float: right;
     color: rgb(102, 252, 241);
     font-size: 20px;
     cursor: pointer;
     padding: 5px;
+}
+
+.addabilitybutton.fa-circle-minus:hover {
+    color: red;
+    transition: 0.4s;
 }
 
 .fa-circle-plus:hover {
@@ -549,7 +595,7 @@ footer {
     color: rgb(102, 252, 241);
 }
 
-.countertoinfo, .counteredbyinfo, .itemforinfo, .itemagainstinfo, .abilityinfoinput {
+.countertoinfo, .counteredbyinfo, .itemforinfo, .itemagainstinfo, .abilityinfoinput, .iteminfoinput {
     resize: none;
     width: 80%;
     height: 100px;
@@ -560,7 +606,11 @@ footer {
     font-family: 'Heebo', sans-serif;
 }
 
-.countertosubmit, .counteredbysubmit, .itemforsubmit, .itemagainstsubmit, .abilityinfosubmit {
+.addabilityinfo {
+    display: none;
+}
+
+.countertosubmit, .counteredbysubmit, .itemforsubmit, .itemagainstsubmit, .abilityinfosubmit, .iteminfosubmit {
     cursor: pointer;
     vertical-align: top;
     background-color: rgb(31, 40, 51);
@@ -571,11 +621,50 @@ footer {
     font-family: 'Heebo', sans-serif;
 }
 
-.counterupvote, .counterdownvote, .counteredupvote, .countereddownvote, .itemforupvote, .itemfordownvote, .itemagainstupvote, .itemagainstdownvote, .abilityupvote, .abilitydownvote {
+.counterupvote, .counterdownvote, .counteredupvote, .countereddownvote, .itemforupvote, .itemfordownvote, .itemagainstupvote, .itemagainstdownvote, .abilityupvote, .abilitydownvote, .itemupvote, .itemdownvote {
     background: none;
     padding: 0px;
     border: none;
-  }
+}
+
+.opendeleteform {
+    font-size: 20px;
+    background: none;
+    border-style: none;
+    color: white;
+    cursor: pointer;
+}
+
+.opendeleteform:hover {
+    color: red;
+    transition: 0.4s;
+}
+
+.formpopup {
+    display: none;
+    text-align: center;
+}
+
+.btn {
+    background-color: rgb(31, 40, 51);
+    color: rgb(111, 219, 219);
+    padding: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+}
+
+.cancel:hover {
+    color: black;
+    background-color: red;
+}
+
+.confirm:hover {
+    color: black;
+    background-color: greenyellow;
+}
 
 .heroitems {
     margin-top: 10px;
@@ -674,4 +763,35 @@ footer {
     background-color: rgb(102, 252, 241);
     border-radius: 20px;
     border: 3px solid rgb(31, 40, 51);
+}
+
+.errorcontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 200px;
+}
+
+.errortitle {
+    text-align: center;
+}
+
+.errortext {
+    text-align: center;
+}
+
+.errorbtn {
+    align-self: center;
+    width: fit-content;
+    padding: 10px;
+    color: rgb(102, 252, 241);
+    background-color: rgb(31, 40, 51);
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.errorbtn:hover {
+    color: rgb(31, 40, 51);
+    background-color: rgb(102, 252, 241);
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo4.png' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/showhide.js') }}"></script>
+    <title>404 Not Found</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <section class="section">
+        <div class="errorcontainer">
+            <h1 class="errortitle">404 Page Not Found</h1>
+            <p class="errortext">The page you request does not exist</p>
+            <button class="errorbtn">RETURN TO HOME</button>
+        </div>
+    </section>
+    <footer>
+        <p>DotaBase</p>
+    </footer>
+</body>
+</html>

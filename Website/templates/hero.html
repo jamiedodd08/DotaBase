@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo4.png' ) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/addcounter.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/showhide.js') }}"></script>
     <script src="https://kit.fontawesome.com/46aee2db62.js" crossorigin="anonymous"></script>
@@ -13,8 +14,25 @@
 </head>
 <body>
     <p hidden>{{hid}}</p>
+    <p hidden class="userid">{{session['id']}}</p>
     {% include 'navbar.html' %}
     <section class="section">
+
+        
+        {% with messages = get_flashed_messages() %}  
+        {% if messages %}  
+        <div class="flashmsg">
+            {% for message in messages %}  
+                    <p>{{ message }}</p>  
+                    <button class="closeicon">
+                        <i class="fa-solid fa-square-xmark closebtn"></i>
+                    </button>
+            {% endfor %}  
+        {% endif %}  
+        </div>
+        {% endwith %}       
+        
+
         <h1 class="herotitle">{{hname}}</h1>
     
         <div class="heroinfo">
@@ -94,33 +112,41 @@
                     <div class="abilityinfocontiner">
                         <div class="notesheader">
                             <h3 class="notestitle">Notes:</h3>
-                            {% if session['username'] %}
-                                <i title="Add new entry" id="addability" onclick="addabilityinfo(this)" class="fa-solid fa-circle-plus"></i>
-                            {% endif %}
+                            
+                            <i title="Add new entry" class="fa-solid fa-circle-plus addinfo addabilitybutton addabilitybtn"></i>
+                            
                         </div>
                         <div class="abilitycontainer">
                             {% for j in abilityuserinfo %}
                                 {% if j[0] == i[10] %}
                                     <div class="abilitynote">
                                         <li class="abilityuserinfo">{{j[2]}}</li>
-                                        {% if session['username'] %}
+
+                                        {% for vote in abilityinfovotes %}
+                                            {% if vote[0] == session['id'] and vote[1] == j[4] and vote[2] == 1 %}
+                                                <p hidden class="userupvote">{{vote[2]}}</p>
+                                            {% elif vote[0] == session['id'] and vote[1] == j[4] and vote[3] == 1 %}
+                                                <p hidden class="userdownvote">{{vote[3]}}</p>
+                                            {% endif %}
+                                        {% endfor %}
+                                        
                                         <div class="voting">
                                             <form method="POST" name="upvote" id="upvote">
                                                 <input type="hidden" id="bool" name="bool" value="1">
                                                 <input type="hidden" id="abilityinfoid" name="abilityinfoid" value="{{j[4]}}">
-                                                <button type="submit" value="Submit" class="abilityupvote" name="abilityupvote">
+                                                <button type="submit" value="Submit" class="abilityupvote vote" name="abilityupvote">
                                                     <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
                                                 </button>
                                             </form>
                                             <form method="POST" name="downvote" id="downvote">
                                                 <input type="hidden" id="bool" name="bool" value="1">
                                                 <input type="hidden" id="abilityinfoid" name="abilityinfoid" value="{{j[4]}}">
-                                                <button type="submit" value="Submit" class="abilitydownvote" name="abilitydownvote">
+                                                <button type="submit" value="Submit" class="abilitydownvote vote" name="abilitydownvote">
                                                     <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
                                                 </button>
                                             </form>
                                         </div>
-                                        {% endif %}   
+                                        
                                          <!-- POST VOTES -->
                                         <div class="votes">
                                             {% for k in abilityvotes %}
@@ -133,12 +159,30 @@
                                                 {% endif %}
                                             {% endfor %}
                                         </div>
+                                        <div class="formcont">
+                                            {% if j[1] == session['id'] %}
+                                                <button id="opendeleteform" class="opendeleteform" name="opendeleteform"> 
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                                <div class="formpopup" id="deletepopup">
+                                                    <form method="POST" name="deletepost" id="deletepost">
+                                                        <input type="hidden" id="iteminfoid" name="iteminfoid" value="{{j[4]}}">
+                                                        <input type="hidden" id="userid" name="userid" value="{{session['id']}}">
+                                                        <!-- <button type="submit" value="submit" class="deletebutton deleteabilitybutton" name="deleteabilitybutton"> 
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button> -->
+                                                        <button type="submit" class="btn confirm deleteabilitybutton" name="deleteabilitybutton">Confirm deletion</button>
+                                                        <button type="button" class="btn cancel">Close</button>
+                                                    </form>
+                                                </div>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 {% endif %}
                             {% endfor %} 
                         </div> 
                         {% if session['username'] %}
-                            <div class="addabilityinfo" style="">
+                            <div class="addabilityinfo" >
                                 <form method="POST" name="abilityinfoform_{{i[10]}}" id="abilityinfoform_{{i[10]}}">
                                     <input type="hidden" id="abilitytag" name="abilitytag" value="{{hname}}">
                                     <input type="hidden" id="abilityid" name="abilityid" value="{{i[10]}}">
@@ -157,10 +201,10 @@
         <i title="Click to hide section" onclick="hidecounters(this)" class="fa fa-eye"></i>
         
         <!-- HERO COUNTERS X HERO SECTION -->
-        <div class="herocounterto">
-            {% if session['username'] %}
-                <i title="Add new entry" onclick="addcounter(this)" class="fa-solid fa-circle-plus"></i>
-            {% endif %}
+        <div class="herocounterto heroinfocontainer">
+            
+            <i title="Add new entry" class="fa-solid fa-circle-plus addinfo addabilitybutton"></i>
+            
         <h3 class="countertotitle">Counter To:</h3>
             
             <div class="countertocontainer">
@@ -171,25 +215,34 @@
                                 <a href={{i[2]}}><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
                             </div>
                             <p class="countertext">{{i[1]}}</p>
+
+                            {% for vote in countertovotes %}
+                                {% if vote[0] == session['id'] and vote[1] == i[3] and vote[2] == 1 %}
+                                    <p hidden class="userupvote">{{vote[2]}}</p>
+                                {% elif vote[0] == session['id'] and vote[1] == i[3] and vote[3] == 1 %}
+                                    <p hidden class="userdownvote">{{vote[3]}}</p>
+                                {% endif %}
+                            {% endfor %}
+
                             <!-- THUMBS UP AND DOWN VOTING FOR EACH POST -->
-                            {% if session['username'] %}
+                            
                             <div class="voting">
                                 <form method="POST" name="upvote" id="upvote">
                                     <input type="hidden" id="bool" name="bool" value="1">
                                     <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
-                                    <button type="submit" value="Submit" class="counterupvote" name="counterupvote">
+                                    <button type="submit" value="Submit" class="counterupvote vote" name="counterupvote">
                                         <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
                                     </button>
                                 </form>
                                 <form method="POST" name="downvote" id="downvote">
                                     <input type="hidden" id="bool" name="bool" value="1">
                                     <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
-                                    <button type="submit" value="Submit" class="counterdownvote" name="counterdownvote">
+                                    <button type="submit" value="Submit" class="counterdownvote vote" name="counterdownvote">
                                         <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
                                     </button>
                                 </form>
                             </div>
-                            {% endif %} 
+                            
                             <!-- POST VOTES -->
                             <div class="votes">
                                 {% for j in countertotalvotes %}
@@ -201,13 +254,29 @@
                                         {% endif %}
                                     {% endif %}
                                 {% endfor %}
-                            </div>        
+                            </div>  
+                            {% if i[5] == session['id'] %}
+                                <button id="opendeleteform" class="opendeleteform" name="opendeleteform"> 
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <div class="formpopup" id="deletepopup">
+                                    <form method="POST" name="deletepost" id="deletepost">
+                                        <input type="hidden" id="iteminfoid" name="iteminfoid" value="{{i[3]}}">
+                                        <input type="hidden" id="userid" name="userid" value="{{session['id']}}">
+                                        <!-- <button type="submit" value="submit" class="deletebutton deletecounterbutton" name="deletecounterbutton"> 
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button> -->
+                                        <button type="submit" class="btn confirm deletebutton deletecounterbutton" name="deletecounterbutton">Confirm deletion</button>
+                                        <button type="button" class="btn cancel">Close</button>
+                                    </form>
+                                </div>
+                            {% endif %}      
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
             {% if session['username'] %}
-                <div class="addcounterto" style="display: none;">
+                <div class="addcounterto formcontainer" style="display: none;">
                     <form method="POST" name="addcountertoform" id="addcountertoform">
                         <input type="hidden" id="countertag" name="countertag" value="{{hname}}">
                         <SELECT class="countertoname" name="countertoname">
@@ -225,10 +294,10 @@
 
         <!-- HERO COUNTERED BY X HERO SECTION -->
         
-        <div class="herocounteredby">
-            {% if session['username'] %}
-                <i title="Add new entry" onclick="addcounteredby(this)" class="fa-solid fa-circle-plus"></i>
-            {% endif %}
+        <div class="herocounteredby heroinfocontainer">
+            
+            <i title="Add new entry" class="fa-solid fa-circle-plus addabilitybutton addinfo"></i>
+            
         <h3 class="counteredbytitle">Countered by:</h3>
             
             <div class="counteredbycontainer">
@@ -239,24 +308,32 @@
                                 <a href={{i[2]}}><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
                             </div>
                             <p class="countertext">{{i[1]}}</p>
-                            {% if session['username'] %}
+
+                            {% for vote in counteredbyvotes %}
+                                {% if vote[0] == session['id'] and vote[1] == i[3] and vote[2] == 1 %}
+                                    <p hidden class="userupvote">{{vote[2]}}</p>
+                                {% elif vote[0] == session['id'] and vote[1] == i[3] and vote[3] == 1 %}
+                                    <p hidden class="userdownvote">{{vote[3]}}</p>
+                                {% endif %}
+                            {% endfor %}
+                            
                             <div class="voting">
                                 <form method="POST" name="upvote" id="upvote">
                                     <input type="hidden" id="bool" name="bool" value="1">
                                     <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
-                                    <button type="submit" value="Submit" class="counteredupvote" name="counteredupvote">
+                                    <button type="submit" value="Submit" class="counteredupvote vote" name="counteredupvote">
                                         <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
                                     </button>
                                 </form>
                                 <form method="POST" name="downvote" id="downvote">
                                     <input type="hidden" id="bool" name="bool" value="1">
                                     <input type="hidden" id="counterid" name="counterid" value="{{i[3]}}">
-                                    <button type="submit" value="Submit" class="countereddownvote" name="countereddownvote">
+                                    <button type="submit" value="Submit" class="countereddownvote vote" name="countereddownvote">
                                         <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
                                     </button>
                                 </form>
                             </div>
-                            {% endif %}
+                            
                             <div class="votes">
                                 {% for j in counteredtotalvotes %}
                                     {% if j[1] == i[3]%}
@@ -268,12 +345,28 @@
                                     {% endif %}
                                 {% endfor %}
                             </div>
+                            {% if i[5] == session['id'] %}
+                                <button id="opendeleteform" class="opendeleteform" name="opendeleteform"> 
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <div class="formpopup" id="deletepopup">
+                                    <form method="POST" name="deletepost" id="deletepost">
+                                        <input type="hidden" id="iteminfoid" name="iteminfoid" value="{{i[3]}}">
+                                        <input type="hidden" id="userid" name="userid" value="{{session['id']}}">
+                                        <!-- <button type="submit" value="submit" class="deletebutton deletecounteredbutton" name="deletecounteredbutton"> 
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button> -->
+                                        <button type="submit" class="btn confirm deletebutton deletecounteredbutton" name="deletecounteredbutton">Confirm deletion</button>
+                                        <button type="button" class="btn cancel">Close</button>
+                                    </form>
+                                </div>
+                            {% endif %} 
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
             {% if session['username'] %}
-                <div class="addcounteredby" style="display: none;">
+                <div class="addcounteredby formcontainer" style="display: none;">
                     <form method="POST" name="addcounteredbyform" id="addcounteredbyform">
                         <input type="hidden" id="counteredtag" name="counteredtag" value="{{hname}}">
                         <SELECT class="counteredbyname" name="counteredbyname">
@@ -291,11 +384,11 @@
 
         <!-- ITEMS FOR HERO TO BUY -->
         <h2 class="itemstitle">Items</h2>
-        <i title="Click to hide section" onclick="hideitems(this)" class="fa fa-eye"></i>
-        <div class="itemsforcontainer">
-            {% if session['username'] %}
-                <i title="Add new entry" onclick="additemfor(this)" class="fa-solid fa-circle-plus"></i>
-            {% endif %}
+            <i title="Click to hide section" onclick="hideitems(this)" class="fa fa-eye"></i>
+        <div class="itemsforcontainer heroinfocontainer">
+            
+            <i title="Add new entry" class="fa-solid fa-circle-plus addabilitybutton addinfo"></i>
+            
             <h3 class="itemfortitle">Items to buy for:</h3>
             <div class="heroitemsfor">
                 
@@ -306,24 +399,32 @@
                                 <a href="/items/{{i[2]}}"><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
                             </div>
                             <p class="itemsfortext">{{i[1]}}</p>
-                            {% if session['username'] %}
-                                <div class="voting">
-                                    <form method="POST" name="upvote" id="upvote">
-                                        <input type="hidden" id="bool" name="bool" value="1">
-                                        <input type="hidden" id="itemforid" name="itemforid" value="{{i[3]}}">
-                                        <button type="submit" value="Submit" class="itemforupvote" name="itemforupvote">
-                                            <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
-                                        </button>
-                                    </form>
-                                    <form method="POST" name="downvote" id="downvote">
-                                        <input type="hidden" id="bool" name="bool" value="1">
-                                        <input type="hidden" id="itemforid" name="itemforid" value="{{i[3]}}">
-                                        <button type="submit" value="Submit" class="itemfordownvote" name="itemfordownvote">
-                                            <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            {% endif %}
+
+                            {% for vote in heroitemforvotes %}
+                                {% if vote[0] == session['id'] and vote[1] == i[3] and vote[2] == 1 %}
+                                    <p hidden class="userupvote">{{vote[2]}}</p>
+                                {% elif vote[0] == session['id'] and vote[1] == i[3] and vote[3] == 1 %}
+                                    <p hidden class="userdownvote">{{vote[3]}}</p>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            <div class="voting">
+                                <form method="POST" name="upvote" id="upvote">
+                                    <input type="hidden" id="bool" name="bool" value="1">
+                                    <input type="hidden" id="itemforid" name="itemforid" value="{{i[3]}}">
+                                    <button type="submit" value="Submit" class="itemforupvote vote" name="itemforupvote">
+                                        <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" name="downvote" id="downvote">
+                                    <input type="hidden" id="bool" name="bool" value="1">
+                                    <input type="hidden" id="itemforid" name="itemforid" value="{{i[3]}}">
+                                    <button type="submit" value="Submit" class="itemfordownvote vote" name="itemfordownvote">
+                                        <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            
                             <div class="votes">
                                 {% for j in itemforvotes %}
                                     {% if j[1] == i[3]%}
@@ -335,12 +436,28 @@
                                     {% endif %}
                                 {% endfor %}
                             </div>
+                            {% if i[5] == session['id'] %}
+                                <button id="opendeleteform" class="opendeleteform" name="opendeleteform"> 
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <div class="formpopup" id="deletepopup">
+                                    <form method="POST" name="deletepost" id="deletepost">
+                                        <input type="hidden" id="iteminfoid" name="iteminfoid" value="{{i[3]}}">
+                                        <input type="hidden" id="userid" name="userid" value="{{session['id']}}">
+                                        <!-- <button type="submit" value="submit" class="deletebutton deleteitemforbutton" name="deleteitemforbutton"> 
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button> -->
+                                        <button type="submit" class="btn confirm deletebutton deleteitemforbutton" name="deleteitemforbutton">Confirm deletion</button>
+                                        <button type="button" class="btn cancel">Close</button>
+                                    </form>
+                                </div>
+                            {% endif %} 
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
             {% if session['username'] %}
-                <div class="additemforinfo" style="display: none;">
+                <div class="additemforinfo formcontainer" style="display: none;">
                     <form method="POST" name="additemforinfoform" id="additemforinfoform">
                         <input type="hidden" id="itemfortag" name="itemfortag" value="{{hname}}">
                         <input type="hidden" id="itemforheroid" name="itemforheroid" value="{{hid}}">
@@ -359,10 +476,10 @@
 
         <!-- ITEMS HEROES SHOULD BUY AGAINST THIS HERO -->
         
-        <div class="itemsagainstcontainer">
-            {% if session['username'] %}
-                <i title="Add new entry" onclick="additemagainst(this)" class="fa-solid fa-circle-plus"></i>
-            {% endif %}
+        <div class="itemsagainstcontainer heroinfocontainer">
+            
+            <i title="Add new entry" class="fa-solid fa-circle-plus addabilitybutton addinfo"></i>
+           
             <h3 class="itemagainsttitle">Items to Against:</h3>
             <div class="heroitemsagainst">
                 {% for i in itemsagainst %}
@@ -372,24 +489,32 @@
                                 <a href="/items/{{i[2]}}"><img src="{{ url_for('static', filename=''+ i[0] ) }}"></a>
                             </div>
                             <p class="itemsagainsttext">{{i[1]}}</p>
-                            {% if session['username'] %}
-                                <div class="voting">
-                                    <form method="POST" name="upvote" id="upvote">
-                                        <input type="hidden" id="bool" name="bool" value="1">
-                                        <input type="hidden" id="itemagainstid" name="itemagainstid" value="{{i[3]}}">
-                                        <button type="submit" value="Submit" class="itemagainstupvote" name="itemagainstupvote">
-                                            <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
-                                        </button>
-                                    </form>
-                                    <form method="POST" name="downvote" id="downvote">
-                                        <input type="hidden" id="bool" name="bool" value="1">
-                                        <input type="hidden" id="itemagainstid" name="itemagainstid" value="{{i[3]}}">
-                                        <button type="submit" value="Submit" class="itemagainstdownvote" name="itemagainstdownvote">
-                                            <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            {% endif %}
+
+                            {% for vote in heroitemagainstvotes %}
+                                {% if vote[0] == session['id'] and vote[1] == i[3] and vote[2] == 1 %}
+                                    <p hidden class="userupvote">{{vote[2]}}</p>
+                                {% elif vote[0] == session['id'] and vote[1] == i[3] and vote[3] == 1 %}
+                                    <p hidden class="userdownvote">{{vote[3]}}</p>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            <div class="voting">
+                                <form method="POST" name="upvote" id="upvote">
+                                    <input type="hidden" id="bool" name="bool" value="1">
+                                    <input type="hidden" id="itemagainstid" name="itemagainstid" value="{{i[3]}}">
+                                    <button type="submit" value="Submit" class="itemagainstupvote vote" name="itemagainstupvote">
+                                        <i title="Upvote" class="fa-solid fa-thumbs-up"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" name="downvote" id="downvote">
+                                    <input type="hidden" id="bool" name="bool" value="1">
+                                    <input type="hidden" id="itemagainstid" name="itemagainstid" value="{{i[3]}}">
+                                    <button type="submit" value="Submit" class="itemagainstdownvote vote" name="itemagainstdownvote">
+                                        <i title="Downvote" class="fa-solid fa-thumbs-down fa-flip-horizontal"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            
                             <div class="votes">
                                 {% for j in itemagainstvotes %}
                                     {% if j[1] == i[3]%}
@@ -401,12 +526,28 @@
                                     {% endif %}
                                 {% endfor %}
                             </div>
+                            {% if i[5] == session['id'] %}
+                                <button id="opendeleteform" class="opendeleteform" name="opendeleteform"> 
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <div class="formpopup" id="deletepopup">
+                                    <form method="POST" name="deletepost" id="deletepost">
+                                        <input type="hidden" id="iteminfoid" name="iteminfoid" value="{{i[3]}}">
+                                        <input type="hidden" id="userid" name="userid" value="{{session['id']}}">
+                                        <!-- <button type="submit" value="submit" class="deletebutton deleteitemagainstbutton" name="deleteitemagainstbutton"> 
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button> -->
+                                        <button type="submit" class="btn confirm deletebutton deleteitemagainstbutton" name="deleteitemagainstbutton">Confirm deletion</button>
+                                        <button type="button" class="btn cancel">Close</button>
+                                    </form>
+                                </div>
+                            {% endif %}
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
             {% if session['username'] %}
-                <div class="additemagainstinfo" style="display: none;">
+                <div class="additemagainstinfo formcontainer" style="display: none;">
                     <form method="POST" name="additemagainstinfoform" id="additemagainstinfoform">
                         <input type="hidden" id="itemagainsttag" name="itemagainsttag" value="{{hname}}">
                         <input type="hidden" id="itemagainstheroid" name="itemagainstheroid" value="{{hid}}">
@@ -421,9 +562,11 @@
                 </div>
             {% endif %}
             </div>
+        </div>
+
     </section>
     <footer>
-    <p>Footer</p>
+    <p>DotaBase</p>
     </footer>
 </body>
 </html>

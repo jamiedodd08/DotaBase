@@ -9,7 +9,7 @@
 <body>
     <header>
         <nav class="navbar">
-            <a href="/home"><img title="Home" src="{{ url_for('static', filename='images/logo4.png') }}" alt="logo" class="logo"></a>
+            <a class="logolink" href="/home"><img title="Home" src="{{ url_for('static', filename='images/logo4.png') }}" alt="logo" class="logo"></a>
             <a href="#" class="togglebutton">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -19,12 +19,20 @@
                 <li><a href="/home">Home</a></li>
                 <li><a href="/heroes">Heroes</a></li>
                 <li><a href="/items">Items</a></li>
+                <li class="mobilelogin">
+                {% if session['username'] %}
+                    <a href="/logout" alt="logoutbutton" class="logoutbutton">logout</a>
+                {% else %}
+                    <a href="/login" alt="loginbutton" class="loginbutton">Login</a>
+                {% endif %}
+                </li>
             </ul>
             {% if session['username'] %}
-                <a href="/logout" alt="logoutbutton" class="logoutbutton">logout</a>
-                {% else %}
-                <a href="/login" alt="loginbutton" class="loginbutton">Login</a>
+                <a href="/logout" alt="logoutbutton" class="logoutbutton desktoplogin">logout</a>
+            {% else %}
+                <a href="/login" alt="loginbutton" class="loginbutton desktoplogin">Login</a>
             {% endif %}
+            
         </nav>
     </header>
 </body>

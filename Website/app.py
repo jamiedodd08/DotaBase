@@ -1,9 +1,11 @@
 from multiprocessing import connection
+from tabnanny import check
 from flask import Flask, render_template,request,redirect,url_for,session,g,flash
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 import string
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ihoihwfojfweijwf'
@@ -12,8 +14,73 @@ mysql = MySQL(app)
 app.config['MYSQL_HOST'] = "localhost"
 app.config['MYSQL_USER'] = "root"
 app.config['MYSQL_PASSWORD'] = ""
-app.config['MYSQL_DB'] = "DotaBaseDB"
+app.config['MYSQL_DB'] = 'DotaBaseDB'
 
+# FUNCTION TO UP VOTE ON THE ITEM NOTES
+def itemnoteupvote(cur):
+    user = session['id']
+    uservote = request.form
+    vote = uservote['bool']
+    itemid = uservote['iteminfoid']
+
+    cur.execute('SELECT ItemUpVote, ItemDownVote FROM ItemInfoVote WHERE ItemInfoID = %s AND UserID = %s',(itemid, user))
+    a = cur.fetchone()
+
+    if a is None:
+        cur.execute("INSERT INTO ItemInfoVote(UserID, ItemInfoID, ItemUpVote) VALUES(%s,%s,%s)",(user, itemid, vote))
+        cur.execute("UPDATE ItemInfo SET ItemTotalUpVote = ItemTotalUpVote + 1 WHERE ItemInfoID = %s",(itemid,))
+        mysql.connection.commit()
+        return redirect(request.url)
+    
+    if a[1] == 1:
+        cur.execute("DELETE FROM ItemInfoVote WHERE ItemInfoID = %s AND UserID = %s",(itemid, user))
+        cur.execute("UPDATE ItemInfo SET ItemTotalDownVote = ItemTotalDownVote - 1 WHERE ItemInfoID = %s",(itemid,))
+        cur.execute("INSERT INTO ItemInfoVote(UserID, ItemInfoID, ItemUpVote) VALUES(%s,%s,%s)",(user, itemid, vote))
+        cur.execute("UPDATE ItemInfo SET ItemTotalUpVote = ItemTotalUpVote + 1 WHERE ItemInfoID = %s",(itemid,))
+        mysql.connection.commit()
+
+    else:
+        cur.execute("DELETE FROM ItemInfoVote WHERE ItemInfoID = %s AND UserID = %s",(itemid, user))
+        cur.execute("UPDATE ItemInfo SET ItemTotalUpVote = ItemTotalUpVote - 1 WHERE ItemInfoID = %s",(itemid,))
+        mysql.connection.commit()
+   
+# FUNCTION TO DOWN VOTE ON THE ITEM NOTES
+def itemnotedownvote(cur):
+    user = session['id']
+    uservote = request.form
+    vote = uservote['bool']
+    iteminfoid = uservote['iteminfoid']
+
+    cur.execute('SELECT ItemUpVote, ItemDownVote FROM ItemInfoVote WHERE ItemInfoID = %s AND UserID = %s',(iteminfoid, user))
+    a = cur.fetchone()
+
+    if a is None:
+        cur.execute("INSERT INTO ItemInfoVote(UserID, ItemInfoID, ItemDownVote) VALUES(%s,%s,%s)",(user, iteminfoid, vote))
+        cur.execute("UPDATE ItemInfo SET ItemTotalDownVote = ItemTotalDownVote + 1 WHERE ItemInfoID = %s",(iteminfoid,))
+        mysql.connection.commit()
+        return redirect(request.url)
+
+    if a[0] == 1:
+        cur.execute("DELETE FROM ItemInfoVote WHERE ItemInfoID = %s AND UserID = %s",(iteminfoid, user))
+        cur.execute("UPDATE ItemInfo SET ItemTotalUpVote = ItemTotalUpVote - 1 WHERE ItemInfoID = %s",(iteminfoid,))
+        cur.execute("INSERT INTO ItemInfoVote(UserID, ItemInfoID, ItemDownVote) VALUES(%s,%s,%s)",(user, iteminfoid, vote))
+        cur.execute("UPDATE ItemInfo SET ItemTotalDownVote = ItemTotalDownVote + 1 WHERE ItemInfoID = %s",(iteminfoid,))
+        mysql.connection.commit()
+
+    else:
+        cur.execute("DELETE FROM ItemInfoVote WHERE ItemInfoID = %s AND UserID = %s",(iteminfoid, user))
+        cur.execute("UPDATE ItemInfo SET ItemTotalDownVote = ItemTotalDownVote - 1 WHERE ItemInfoID = %s",(iteminfoid,))
+        mysql.connection.commit()
+
+# FUNCTION TO ADD ITEM INFO
+def additeminfo(cur):
+    user = session['id']
+    iteminfo = request.form
+    info = iteminfo['iteminfoinput']
+    id = iteminfo['itemid']
+    tag = iteminfo['itemtag']
+    cur.execute("INSERT INTO ItemInfo(ItemID, UserID, ItemUserInfo, ItemInfoTag) VALUES(%s, %s, %s, %s)",(id, user, info, tag))
+    mysql.connection.commit()
 
 # FUNCTION TO ADD ABILITY INFO
 def addabilityinfo(cur):
@@ -377,12 +444,80 @@ def abilitytotalvotes(cur):
     votes = cur.fetchall()
     return votes
 
+# FUNCTION TO RETURN TOTAL VOTES OF EACH COUNTERED BY ENTRY
+def itemnotetotalvotes(cur):
+    cur.execute("SELECT ItemTotalVotes, ItemInfoID FROM ItemInfo")
+    votes = cur.fetchall()
+    return votes
+
+# FUNCTION TO DELETE ITEM USER INFO
+def deleteitemnote(cur):
+    itemdel = request.form
+    infoid = itemdel['iteminfoid']
+    user = itemdel['userid']
+    cur.execute("DELETE FROM ItemInfoVote WHERE ItemInfoID = %s",(infoid,))
+    cur.execute("DELETE FROM ItemInfo WHERE ItemInfoID = %s AND UserID = %s",(infoid, user))
+    mysql.connection.commit()
+
+# FUNCTION TO DELETE COUNTER TO USER INFO
+def deletecountertoinfo(cur):
+    itemdel = request.form
+    infoid = itemdel['iteminfoid']
+    user = itemdel['userid']
+    cur.execute("DELETE FROM CounterToVote WHERE CounterID = %s",(infoid,))
+    cur.execute("DELETE FROM CountersTo WHERE CounterID = %s AND UserID = %s",(infoid, user))
+    mysql.connection.commit()
+
+# FUNCTION TO DELETE COUNTERED BY USER INFO 
+def deletecounteredbyinfo(cur):
+    itemdel = request.form
+    infoid = itemdel['iteminfoid']
+    user = itemdel['userid']
+    cur.execute("DELETE FROM CounteredByVote WHERE CounteredID = %s",(infoid,))
+    cur.execute("DELETE FROM CounteredBy WHERE CounteredID = %s AND UserID = %s",(infoid, user))
+    mysql.connection.commit()
+
+# FUNCTION TO DELETE ITEM FOR USER INFO
+def deleteitemforinfo(cur):
+    itemdel = request.form
+    infoid = itemdel['iteminfoid']
+    user = itemdel['userid']
+    cur.execute("DELETE FROM HeroItemsForVote WHERE HeroItemForID = %s",(infoid,))
+    cur.execute("DELETE FROM HeroItemsFor WHERE HeroItemForID = %s AND UserID = %s",(infoid, user))
+    mysql.connection.commit()
+
+# FUNTION TO DELETE ITEM AGAINST USER INFO
+def deleteitemagainstinfo(cur):
+    itemdel = request.form
+    infoid = itemdel['iteminfoid']
+    user = itemdel['userid']
+    cur.execute("DELETE FROM HeroItemsAgainstVote WHERE HeroItemAgainstID = %s",(infoid,))
+    cur.execute("DELETE FROM HeroItemsAgainst WHERE HeroItemAgainstID = %s AND UserID = %s",(infoid, user))
+    mysql.connection.commit()
+
+# FUNCTION TO DELETE ABILITY USER INFO
+def deleteabilityinfo(cur):
+    itemdel = request.form
+    infoid = itemdel['iteminfoid']
+    user = itemdel['userid']
+    cur.execute("DELETE FROM AbilityVote WHERE AbilityInfoID = %s",(infoid,)) 
+    cur.execute("DELETE FROM AbilityInfo WHERE AbilityInfoID = %s AND UserID = %s",(infoid, user))
+    mysql.connection.commit()
+
+
+
+
+
 @app.before_request
 def before_request():
     g.user = None
     if 'id' in session:
         user = session['id']
         g.user = user
+
+@app.errorhandler(404)
+def error404(e):
+    return render_template('404.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -391,9 +526,13 @@ def login():
         username = request.form['username']
         password = request.form['password']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM Users WHERE username =%s AND UserPassword = %s', (username, password,))
+        cursor2 = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM Users WHERE username =%s', (username,))
+        cursor2.execute('SELECT UserPassword FROM Users WHERE username =%s', (username,))
         account = cursor.fetchone()
-        if account:
+        passhash = cursor2.fetchone()
+        
+        if account and check_password_hash(passhash[0], password): 
             session['loggedin'] = True
             session['id'] = account['UserID']
             session['username'] = account['Username']
@@ -428,7 +567,8 @@ def register():
         elif not username or not password or not email:
             msg = 'Please fill every field.'
         else:
-            cursor.execute('INSERT INTO Users VALUES (NULL, %s, %s, %s)', (username, password, email,))
+            hashed_value = generate_password_hash(password)
+            cursor.execute('INSERT INTO Users VALUES (NULL, %s, %s, %s)', (username, hashed_value, email,))
             mysql.connection.commit()
             msg = 'You have successfully registered.'
     elif request.method == 'POST':
@@ -458,6 +598,12 @@ def item(itemname):
     cur.execute("SELECT ItemID, ItemName, ItemIconLink, ItemCost, ItemInfo, ItemAbilityName1, ItemAbilityInfo1, ItemAbilityName2, ItemAbilityInfo2, ItemAbilityName3, ItemAbilityInfo3 FROM Items")
     items = cur.fetchall()
 
+    cur.execute("SELECT ItemID, UserID, ItemUserInfo, ItemInfoTag, ItemInfoID FROM ItemInfo ORDER BY ItemTotalVotes DESC")
+    itemuserinfo = cur.fetchall()
+
+    cur.execute("SELECT UserID, ItemInfoID, ItemUpVote, ItemDownVote FROM ItemInfoVote")
+    votes = cur.fetchall()
+
     itemid = None
     iname = None
     itemimgurl = None
@@ -484,7 +630,10 @@ def item(itemname):
             abilityname3 = i[9]
             abilityinfo3 = i[10]
 
-    iteminfo = iteminfo.split(',')
+    try:
+        iteminfo = iteminfo.split(',')
+    except:
+        return redirect('/error404')
 
     iname = string.capwords(iname.replace('-',' '))
 
@@ -494,9 +643,37 @@ def item(itemname):
     cur.execute("SELECT Heroes.HeroIconLink, HeroItemsAgainst.ItemID, HeroItemsAgainst.ItemAgainstTag, HeroItemsAgainst.HeroItemAgainstUserInfo, HeroItemsAgainst.HeroItemAgainstTotalVotes FROM Heroes INNER JOIN HeroItemsAgainst ON HeroItemsAgainst.HeroID=Heroes.HeroID ORDER BY HeroItemAgainstTotalVotes DESC")
     itemsagainst = cur.fetchall()
 
+    itemnotevotes = itemnotetotalvotes(cur)
+
+    if "deletebutton" in request.form:
+        deleteitemnote(cur)
+        flash("Your submission has been deleted!")
+        return redirect(request.url)
+
+    if "iteminfosubmit" in request.form:
+        additeminfo(cur)
+        flash("Your submission has been posted!")
+        return redirect(request.url)
+        
+    if "itemupvote" in request.form:
+        if g.user is None:
+            return redirect(url_for('login')) 
+        else:
+            itemnoteupvote(cur)
+            return redirect(request.url)
+            
+
+    if "itemdownvote" in request.form:
+        if g.user is None:
+            return redirect(url_for('login'))
+        else:
+            itemnotedownvote(cur)
+            return redirect(request.url)
+            
+
     cur.close()
 
-    return render_template("item.html",items=items, itemid=itemid, iname=iname, imgurl=itemimgurl, itemsfor=itemsfor, itemsagainst=itemsagainst, itemcost=itemcost, iteminfo=iteminfo, abilityname1=abilityname1, abilityname2=abilityname2, abilityname3=abilityname3, abilityinfo1=abilityinfo1, abilityinfo2=abilityinfo2, abilityinfo3=abilityinfo3)
+    return render_template("item.html", votes=votes,itemuserinfo=itemuserinfo, items=items, itemid=itemid, iname=iname, imgurl=itemimgurl, itemsfor=itemsfor, itemsagainst=itemsagainst, itemcost=itemcost, iteminfo=iteminfo, abilityname1=abilityname1, abilityname2=abilityname2, abilityname3=abilityname3, abilityinfo1=abilityinfo1, abilityinfo2=abilityinfo2, abilityinfo3=abilityinfo3, itemnotevotes=itemnotevotes)
 
 @app.route('/heroes/<heroname>', methods=['GET', 'POST'])
 def hero(heroname):
@@ -557,8 +734,11 @@ def hero(heroname):
             lane2 = i[21]
             lane3 = i[22]
             lane4 = i[23]   
-        
-    hname = string.capwords(hname.replace('-',' '))
+
+    try: 
+        hname = string.capwords(hname.replace('-',' '))
+    except:
+        return redirect('/error404')
 
     # FETCH ABILITIES
     cur.execute("SELECT Heroes.HeroName, Abilities.HeroID, Abilities.AbilityName, Abilities.AbilityIconLink, Abilities.AbilityDesc, Abilities.AbilityAbility, Abilities.AbilityAffect, Abilities.AbilityDamage, Abilities.AbilityCooldown, Abilities.AbilityManaCost, Abilities.AbilityID FROM Heroes INNER JOIN Abilities ON Abilities.HeroID=Heroes.HeroID")
@@ -573,11 +753,11 @@ def hero(heroname):
     fetchnames = cur.fetchall()
 
     # FETCH COUNTERS
-    cur.execute("SELECT Heroes.HeroIconLink, CountersTo.CounterUserInfo, Heroes.HeroName, CountersTo.CounterID, CountersTo.CounterTag FROM Heroes INNER JOIN CountersTo ON CountersTo.HeroID=Heroes.HeroID ORDER BY CounterToTotalVotes DESC")
+    cur.execute("SELECT Heroes.HeroIconLink, CountersTo.CounterUserInfo, Heroes.HeroName, CountersTo.CounterID, CountersTo.CounterTag, CountersTo.UserID FROM Heroes INNER JOIN CountersTo ON CountersTo.HeroID=Heroes.HeroID ORDER BY CounterToTotalVotes DESC")
     fetchcounterto = cur.fetchall()
 
     # FETCH COUNTERED BY
-    cur.execute("SELECT Heroes.HeroIconLink, CounteredBy.CounteredUserInfo, Heroes.HeroName, CounteredBy.CounteredID, CounteredBy.CounteredTag FROM Heroes INNER JOIN CounteredBy ON CounteredBy.HeroID=Heroes.HeroID ORDER BY CounteredByTotalVotes DESC")
+    cur.execute("SELECT Heroes.HeroIconLink, CounteredBy.CounteredUserInfo, Heroes.HeroName, CounteredBy.CounteredID, CounteredBy.CounteredTag, CounteredBy.UserID FROM Heroes INNER JOIN CounteredBy ON CounteredBy.HeroID=Heroes.HeroID ORDER BY CounteredByTotalVotes DESC")
     fetchcounteredby = cur.fetchall()
 
     # FETCH ITEMS INFO
@@ -585,12 +765,32 @@ def hero(heroname):
     fetchitems = cur.fetchall()
 
     # FETCH ITEMS FOR
-    cur.execute("SELECT Items.ItemIconLink, HeroItemsFor.HeroItemForUserInfo, Items.ItemName, HeroItemsFor.HeroItemForID, HeroItemsFor.ItemForTag FROM Items INNER JOIN HeroItemsFor ON HeroItemsFor.ItemID=Items.ItemID ORDER BY HeroItemForTotalVotes DESC")
+    cur.execute("SELECT Items.ItemIconLink, HeroItemsFor.HeroItemForUserInfo, Items.ItemName, HeroItemsFor.HeroItemForID, HeroItemsFor.ItemForTag, HeroItemsFor.UserID FROM Items INNER JOIN HeroItemsFor ON HeroItemsFor.ItemID=Items.ItemID ORDER BY HeroItemForTotalVotes DESC")
     fetchitemsfor = cur.fetchall()
 
     # FETCH ITEMS AGAINST
-    cur.execute("SELECT Items.ItemIconLink, HeroItemsAgainst.HeroItemAgainstUserInfo, Items.ItemName, HeroItemsAgainst.HeroItemAgainstID, HeroItemsAgainst.ItemAgainstTag FROM Items INNER JOIN HeroItemsAgainst ON HeroItemsAgainst.ItemID=Items.ItemID ORDER BY HeroItemAgainstTotalVotes DESC")
+    cur.execute("SELECT Items.ItemIconLink, HeroItemsAgainst.HeroItemAgainstUserInfo, Items.ItemName, HeroItemsAgainst.HeroItemAgainstID, HeroItemsAgainst.ItemAgainstTag, HeroItemsAgainst.UserID FROM Items INNER JOIN HeroItemsAgainst ON HeroItemsAgainst.ItemID=Items.ItemID ORDER BY HeroItemAgainstTotalVotes DESC")
     fetchitemsagainst = cur.fetchall()
+
+    # FETCH VOTES FOR ABILITIY
+    cur.execute("SELECT UserID, AbilityInfoID, AbilityUpVote, AbilityDownVote FROM AbilityVote")
+    abilityinfovotes = cur.fetchall()
+
+    # FETCH VOTES FOR COUNTER TO
+    cur.execute("SELECT UserID, CounterID, CounterUpVote, CounterDownVote FROM CounterToVote")
+    countertovotes = cur.fetchall()
+
+    # FETCH VOTES FOR COUNTERED BY
+    cur.execute("SELECT UserID, CounteredID, CounteredUpVote, CounteredDownVote FROM CounteredByVote")
+    counteredbyvotes = cur.fetchall()
+
+    # FETCH VOTES FOR HERO ITEM FOR
+    cur.execute("SELECT UserID, HeroItemForID, HeroItemForUpVote, HeroItemForDownVote FROM HeroItemsForVote")
+    heroitemforvotes = cur.fetchall()
+
+    # FETCH VOTES FOR HERO ITEM AGAINST
+    cur.execute("SELECT UserID, HeroItemAgainstID, HeroItemAgainstUpVote, HeroItemAgainstDownVote FROM HeroItemsAgainstVote")
+    heroitemagainstvotes = cur.fetchall()
 
     fetchtotalcountervotes = countertototalvotes(cur)
     fetchtotalcounteredvotes = counteredbytotalvotes(cur)
@@ -598,59 +798,143 @@ def hero(heroname):
     fetchtotalitemagainstvotes = itemagainsttotalvotes(cur)
     abilityvotes = abilitytotalvotes(cur)
 
+
     if "countertosubmit" in request.form:
         addcounterto(cur)
+        flash("Your submission has been posted!")
         return redirect(request.url)
+
     if "counteredbysubmit" in request.form:
         addcounteredby(cur)
+        flash("Your submission has been posted!")
         return redirect(request.url)
+
     if "counterupvote" in request.form:
-        countertoupvote(cur)
-        return redirect(request.url)
+        if g.user is None:
+            return redirect(url_for('login'))
+        else:
+            countertoupvote(cur)
+            return redirect(request.url)
+            
+
     if "counterdownvote" in request.form:
-        countertodownvote(cur)
-        return redirect(request.url)
+        if g.user is None:
+            return redirect(url_for('login'))
+        else:
+            countertodownvote(cur)
+            return redirect(request.url)
+            
+
     if "counteredupvote" in request.form:
-        counteredbyupvote(cur)
-        return redirect(request.url)
+        if g.user is None:
+            return redirect(url_for('login'))
+        else:
+            counteredbyupvote(cur)
+            return redirect(request.url)
+            
+
     if "countereddownvote" in request.form:
-        counteredbydownvote(cur)
-        return redirect(request.url)
+        if g.user is None:
+            return redirect(url_for('login'))  
+        else:
+            counteredbydownvote(cur)
+            return redirect(request.url)
+            
+
     if "itemforsubmit" in request.form:
         additemfor(cur)
+        flash("Your submission has been posted!")
         return redirect(request.url)
+
     if "itemagainstsubmit" in request.form:
         additemagainst(cur)
+        flash("Your submission has been posted!")
         return redirect(request.url)
+
     if "itemforupvote" in request.form:
-        itemforupvote(cur)
-        return redirect(request.url)
+        if g.user is None:
+            return redirect(url_for('login'))
+        else:
+            itemforupvote(cur)
+            return redirect(request.url)
+            
+
     if "itemfordownvote" in request.form:
-        itemfordownvote(cur)
-        return redirect(request.url)
+        if g.user is None:
+            return redirect(url_for('login'))
+        else:
+            itemfordownvote(cur)
+            return redirect(request.url)
+            
     if "itemagainstupvote" in request.form:
-        itemagainstupvote(cur)
-        return redirect(request.url)
+        if g.user is None:
+            return redirect(url_for('login'))    
+        else:
+            itemagainstupvote(cur)
+            return redirect(request.url)
+            
     if "itemagainstdownvote" in request.form:
-        itemagainstdownvote(cur)
-        return redirect(request.url)
+        if g.user is None:
+            return redirect(url_for('login'))
+        else:
+            itemagainstdownvote(cur)
+            return redirect(request.url)
+            
+
     if "abilityinfosubmit" in request.form:
         addabilityinfo(cur)
+        flash("Your submission has been posted!")
         return redirect(request.url)
+        
+
     if "abilityupvote" in request.form:
-        abilityupvote(cur)
-        return redirect(request.url)
+        if g.user is None:
+            return redirect(url_for('login')) 
+        else:
+            abilityupvote(cur)
+            return redirect(request.url)
+            
     if "abilitydownvote" in request.form:
-        abilitydownvote(cur)
+        if g.user is None:
+            return redirect(url_for('login'))
+        else:
+            abilitydownvote(cur)
+            return redirect(request.url)
+            
+    if "deleteabilitybutton" in request.form:
+        deleteabilityinfo(cur)
+        flash("Your submission has been deleted!")
         return redirect(request.url)
+
+    if "deletecounterbutton" in request.form:
+        deletecountertoinfo(cur)
+        flash("Your submission has been deleted!")
+        return redirect(request.url)
+
+    if "deletecounteredbutton" in request.form:
+        deletecounteredbyinfo(cur)
+        flash("Your submission has been deleted!")
+        return redirect(request.url)
+
+    if "deleteitemforbutton" in request.form:
+        deleteitemforinfo(cur)
+        flash("Your submission has been deleted!")
+        return redirect(request.url)
+
+    if "deleteitemagainstbutton" in request.form:
+        deleteitemagainstinfo(cur)
+        flash("Your submission has been deleted!")
+        return redirect(request.url)
+        
 
 
     cur.close()
    
-    return render_template("hero.html", hname=hname, heroimgurl=heroimgurl, heroes=heroes, heronames=fetchnames, countertoinfo=fetchcounterto, counteredbyinfo=fetchcounteredby, countertotalvotes=fetchtotalcountervotes, 
+    return render_template("hero.html",abilityinfovotes=abilityinfovotes, hname=hname, heroimgurl=heroimgurl, heroes=heroes, heronames=fetchnames, countertoinfo=fetchcounterto, counteredbyinfo=fetchcounteredby, countertotalvotes=fetchtotalcountervotes, 
     counteredtotalvotes=fetchtotalcounteredvotes, items=fetchitems, itemsfor=fetchitemsfor, itemsagainst=fetchitemsagainst, itemforvotes=fetchtotalitemforvotes, itemagainstvotes=fetchtotalitemagainstvotes, abilities=abilities, hid=hid,
     heroattribute=heroattribute, strength=strength, agility=agility, intelligence=intelligence, role1=role1, role2=role2, role3=role3, role4=role4, role5=role5,role6=role6, armor=armor, attack=attack, speed=speed,
-    type=type, complexity=complexity,lane1=lane1, lane2=lane2, lane3=lane3, lane4=lane4, health=health, mana=mana, abilityuserinfo=fetchabilityuserinfo,abilityvotes=abilityvotes)
+    type=type, complexity=complexity,lane1=lane1, lane2=lane2, lane3=lane3, lane4=lane4, health=health, mana=mana, abilityuserinfo=fetchabilityuserinfo,abilityvotes=abilityvotes, countertovotes=countertovotes, counteredbyvotes=counteredbyvotes,
+    heroitemforvotes=heroitemforvotes,heroitemagainstvotes=heroitemagainstvotes)
 
 if __name__ == '__main__':
     app.run(debug=True)

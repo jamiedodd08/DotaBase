@@ -34,7 +34,6 @@ header {
     font-size: 20px;
     color: rgb(102, 252, 241);
     text-decoration: none;
-    float: right;
 }
 
 .logoutbutton {
@@ -43,7 +42,6 @@ header {
     font-size: 20px;
     color: rgb(102, 252, 241);
     text-decoration: none;
-    float: right;
 }
 
 .togglebutton {
@@ -82,6 +80,7 @@ header {
     color: white;
 }
 
+
  @media (max-width: 800px) {
     .logo {
         cursor: pointer;
@@ -89,6 +88,10 @@ header {
         display: block;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .desktoplogin {
+        display: none;
     }
 
     .togglebutton {
@@ -121,5 +124,23 @@ header {
     .nav-links.active {
         display: contents;
     }
+
+    .logolink {
+        cursor: pointer;
+        max-width: 170px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
 } 
 
+@media (min-width: 801px) {
+
+    .mobilelogin {
+        display: none!important;
+    }
+    .desktoplogin {
+        float: right;
+    }
+}
